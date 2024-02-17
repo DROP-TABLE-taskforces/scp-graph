@@ -50,6 +50,19 @@ toc: false
   <a href="https://observablehq.com/framework/getting-started" target="_blank">Get started<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
+<div class="grid grid-cols-1">
+  <div class="card">${
+    resize((width) => Plot.plot({
+      width,
+      y: {grid: true, label: "Awesomeness"},
+      marks: [
+        Plot.ruleY([0]),
+        Plot.lineY(aapl, {x: "Date", y: "Close", tip: true})
+      ]
+    }))
+  }</div>
+</div>
+
 <div class="grid grid-cols-2" style="grid-auto-rows: 504px;">
   <div class="card">${
     resize((width) => Plot.plot({
