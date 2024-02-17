@@ -14,7 +14,7 @@ const Data = require('./types').Data;
  *  types: string[]
  * }}
  */
-let db = {
+const db = {
     pages: [],
     tags: [],
     types: []

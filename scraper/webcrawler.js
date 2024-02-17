@@ -2,11 +2,10 @@ const https = require('https');
 const Page = require('./types').Page;
 
 /** @type {string[]} */
-let queue = [];
+const queue = [];
 /** @type {Object.<string, boolean>} */
-let foundpages = {};
+const foundpages = {};
 
-const sitelink = 'https://scp-wiki.wikidot.com/';
 const contex = /<div id="main-content">[ \n\t]*(.*?)[ \n\t]*<div class="licensebox">/;
 const tagex = /<div class="page-tags">[ \n\t]*<span>[ \n\t]*(.*?)[ \n\t]*<\/span>[ \n\t]*<\/div>/;
 
@@ -22,6 +21,16 @@ function add_to_queue(id) {
     }
 }
 
+const options = {
+    hostname: 'scp-wiki.wikidot.com',
+    port: 443,
+    path: '/',
+    headers: {
+        'User-Agent': 'Mozilla/5.0'
+    }
+}
+options.agent = https.Agent(options);
+
 /**
  * Gets page and isolates content.
  * @returns {Promise<Page>} Content of page.
@@ -33,7 +42,8 @@ async function next_page() {
         let id = queue.shift();
         foundpages[id] = true;
         let data = '';
-        https.get(sitelink + id, (res) => {
+        options.path = '/' + id;
+        https.get(options, (res) => {
             if (res.statusCode < 200 || res.statusCode > 299) {
                 bad({place: 'crawler', reason: 'code', code: res.statusCode});
                 return;
