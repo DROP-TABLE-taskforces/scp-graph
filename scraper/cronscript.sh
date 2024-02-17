@@ -5,8 +5,7 @@ CR_DIR=$(pwd)
 cd $SCRIPT_DIR
 echo $(date '+%d.%m.%Y %H:%M:%S') > log.txt
 node main.js >> log.txt
-git add * 2>/dev/null 1>>log.txt
-git commit -m "scheduled update" >> log.txt
+git commit -a -m "scheduled update" >> log.txt
 # git fetch # complete with repo local name
 # git pull # complete with repo local name and main branch
 # git push # complete with repo local name and main branch
