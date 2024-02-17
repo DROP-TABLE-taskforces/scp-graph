@@ -43,17 +43,24 @@ class Data {
     /**
      * Standard constructor.
      * @param {string} id Page path / reference.
+     * @param {string} title Page title.
      * @param {string[]} links Links found within the page, as simplified references.
      * @param {string[]} tags Tags of the page, as strings.
      * @param {string} type Type of page.
      */
-    constructor(id, links, tags, type) {
+    constructor(id, title, links, tags, type) {
         /**
          * Page path / reference.
          * @type {string}
          * @public
          */
         this.id = id;
+        /**
+         * Page title.
+         * @type {string}
+         * @public
+         */
+        this.title = title;
         /**
          * Links found within the page.
          * @type {string[]}
