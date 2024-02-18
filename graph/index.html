@@ -13,19 +13,11 @@
 
         .sidenav {
             height: 100%;
-            width: 0;
             position: fixed;
             z-index: 1;
-            top: 0;
-            left: 0;
             background-color: black;
             overflow-x: hidden;
-            transition: 0.5s;
-        }
-
-        .sidenav a {
-            font-size: 16px;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         .flex-col {
@@ -38,11 +30,14 @@
         }
 
         #stil1{
+            font-size: 12px;
+            margin-left:8px;
             background-color: #121212;
             text-align: center;
             color: #9F9F9F;
         }
         #stil2{
+            font-size: 12px;
             background-color: black;
             text-align: left;
             color: #C3C3C3;
@@ -61,6 +56,46 @@
             width: 0;
         }
 
+        /*Button animation*/
+
+
+        .button {
+            cursor:pointer;
+            font-size: 12px;
+            padding-top: 8px;
+            padding-right: 5px;
+            padding-bottom: 8px;
+            padding-left: 10px;
+            width: 100%;
+            display: block;
+            background: linear-gradient(to right, #495AD3 50%,black 50%);
+            background-size: 200% 100%;
+            background-position: right bottom;
+            transition: all .15s ease-out;
+        }
+
+        .button:hover {
+            background-position: left bottom;
+        }
+
+        .text {
+            color: #C3C3C3;
+            display: block;
+        }
+
+        /*BAR*/
+
+        .bar {
+            border-left: 8px solid #495AD3;
+            height: 100%;
+            position: absolute;
+            left: 0%;
+            top: 0;
+        }
+        .bar:hover{
+            border-left:8px solid #4D71DC;
+        }
+
     </style>
 </head>
 
@@ -69,53 +104,77 @@
 <span style="font-size: 4vmin;cursor:pointer;position: absolute;left: 10px;right: 0;" onclick="openNav()">&#9776;</span>
 
 <div id="mySidenav" class="sidenav">
-    <div class="flex-col" id="stil1">
-        <div><a style="font-weight: bold">EXAMPLE</a>
-            <div class="flex-container" id="stil2">
-                <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+        <div class="bar"></div>
+        <div class="flex-col" id="stil1">
+            <div><a style="font-weight: bold;margin-top: 8px;margin-bottom: 8px;">GETTING STARTED</a>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Guide for Newcomers</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Join the site</div>
+                    </div>
+                </div>
+                <div class="flex-row" id="stil2">
+                    <div class="button">
+                        <div class="text">Contribute</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">FAQ</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Universe Hub</div>
+                    </div>
+                </div>
+                <div class="flex-row" style="font-weight: bold;">
+                    <div class="button">
+                        <div class="text">Main</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">Forum</div>
+                    </div>
+                </div>
             </div>
-            <div class="flex-row">
-                <div id="stil2">Example</div>
-                <div id="stil2">Example</div>
+            <div><a style="font-weight: bold">EXAMPLE</a>
+                <div class="flex-container" id="stil2">
+                    <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+                </div>
+                <div class="flex-row">
+                    <div id="stil2">Example</div>
+                    <div id="stil2">Example</div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div>Example</div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div>Example</div>
+                </div>
             </div>
-            <div class="flex-container" id="stil2">
-                <div>Example</div>
-            </div>
-            <div class="flex-container" id="stil2">
-                <div>Example</div>
+            <div><a style="font-weight: bold">EXAMPLE</a>
+                <div class="flex-container" id="stil2">
+                    <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+                </div>
+                <div class="flex-row">
+                    <div id="stil2">Example</div>
+                    <div id="stil2">Example</div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div>Example</div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div>Example</div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="closebtn" onclick="closeNav()" style="cursor:pointer;color: #C3C3C3;display: block;">Leave</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div><a style="font-weight: bold">EXAMPLE</a>
-            <div class="flex-container" id="stil2">
-                <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
-            </div>
-            <div class="flex-row">
-                <div id="stil2">Example</div>
-                <div id="stil2">Example</div>
-            </div>
-            <div class="flex-container" id="stil2">
-                <div>Example</div>
-            </div>
-            <div class="flex-container" id="stil2">
-                <div>Example</div>
-            </div>
-        </div>
-        <div><a style="font-weight: bold">EXAMPLE</a>
-            <div class="flex-container" id="stil2">
-                <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
-            </div>
-            <div class="flex-row">
-                <div id="stil2">Example</div>
-                <div id="stil2">Example</div>
-            </div>
-            <div class="flex-container" id="stil2">
-                <div>Example</div>
-            </div>
-            <div class="flex-container" id="stil2">
-                <div>Example</div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div id="graph" ></div>
@@ -132,7 +191,7 @@
     });
 
     function openNav() {
-        document.getElementById("mySidenav").style.width = "16%";
+        document.getElementById("mySidenav").style.width = "15%";
     }
 
     function closeNav() {
