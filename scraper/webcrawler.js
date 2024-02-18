@@ -68,7 +68,7 @@ function np_aux(good, bad) {
     queue_size -= id.length;
     let currdate = new Date();
     console.log(currdate.toLocaleDateString() + ' ' + currdate.toLocaleTimeString() + ' - ' + id);
-    console.log('\tqueue size ' + queue.length + ' / ' + queue_size / 1024 + ' KB');
+    console.log('\tqueue size ' + queue.length + ' / ' + Math.ceil(queue_size / 1024) + ' KB');
     foundpages[id] = true;
     let data = '';
     options.path = '/' + id;
