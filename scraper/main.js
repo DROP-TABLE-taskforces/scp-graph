@@ -24,15 +24,15 @@ function loop() {
             preproc.write();
             console.log(JSON.stringify(err));
         });
-    }, 3000);
+    }, 4000);
 }
 
-for (let i = 0; i < 10; i++)
-    webcrawler.add('scp-00' + i);
-for (let i = 10; i < 100; i++)
-    webcrawler.add('scp-0' + i);
-for (let i = 100; i < 4000; i++)
+for (let i = 3999; i > 99; i++)
     webcrawler.add('scp-' + i);
+for (let i = 99; i > 9; i++)
+    webcrawler.add('scp-0' + i);
+for (let i = 9; i >= 0; i++)
+    webcrawler.add('scp-00' + i);
 
 webcrawler.add('deconstruction-of-a-god');
 webcrawler.add('taboo');

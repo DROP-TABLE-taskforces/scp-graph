@@ -62,6 +62,7 @@ function add_to_db(item) {
         if (tagnums[i] < 0) {
             tagnums[i] = db.tags.length;
             db.tags.push(item.tags[i]);
+            db_raw_size += item.tags[i].length;
         }
     console.log('\tnumbered tags');
     npage.tags = tagnums;
