@@ -19,7 +19,7 @@ function loop() {
                         webcrawler.add(link);
                 preproc.add(data);
                 count++;
-                if (count > 50) {
+                if (count % 50 == 0) {
                     console.log('backing up database to file');
                     preproc.write();
                 }
