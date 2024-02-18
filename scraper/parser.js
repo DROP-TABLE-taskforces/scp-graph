@@ -3,8 +3,8 @@ const Data = require('./types').Data;
 
 const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,
-    link: /href="(https?:\/\/scp-wiki\.wikidot\.com|https?:\/\/www\.scp-wiki\.net)?\/(.*?)"/,
-    tag: /<a href="\/(system:page-tags\/tag\/(.*?)#pages)>(.*?)<\/a>/
+    link: /href="(https?:\/\/scp-wiki\.wikidot\.com|https?:\/\/www\.scp-wiki\.net)?\/(.*?)"/g,
+    tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g
 }
 
 const known_types = [
@@ -27,11 +27,11 @@ function get_data(page) {
         links.push(match[2]);
     let tags = [];
     let type = 'unknown';
-    for (let match of page.tags.matchAll(rexs.tag)) if (match[2] == match[3]) {
-        links.push(match[1]);
+    for (let match of page.tags.matchAll(rexs.tag)) if (match[1] == match[2]) {
+        tags.push(match[1]);
         for (let ptype of known_types)
-            if (match[2] == ptype) {
-                type = match[2];
+            if (match[1] == ptype) {
+                type = match[1];
                 break;
             }
     }

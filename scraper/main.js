@@ -2,12 +2,18 @@ const webcrawler = require('./webcrawler');
 const parser = require('./parser');
 const preproc = require('./pre-proc');
 
-while (queue.length > 0) {
-    let page = await webcrawler.next();
-    let data = parser.parse(id, page);
-    for (let newid of data.links)
-        webcrawler.add(newid);
-    preproc.add(data);
+function loop() {
+    webcrawler.next().then((page) => {
+        if (page.id) {
+            let data = parser.parse(page);
+            for (let link of data.links)
+                webcrawler.add(link);
+            preproc.add(data);
+            loop();
+            preproc.write();
+        }
+    }).catch((err) => console.log(JSON.stringify(err)));
 }
 
-preproc.write();
+webcrawler.add('taboo');
+loop();

@@ -44,6 +44,10 @@ async function next_page() {
     return new Promise((good, bad) => {
         while (foundpages[queue[0]])
             queue.shift();
+        if (queue.length == 0) {
+            good(new Page('', '', ''));
+            return;
+        }
         let id = queue.shift();
         foundpages[id] = true;
         let data = '';
@@ -52,6 +56,9 @@ async function next_page() {
         https.get(options, (res) => {
             if (errorfound) return;
             if (res.statusCode < 200 || res.statusCode > 299) {
+                if (res.statusCode == 301) {
+                    
+                }
                 errorfound = true;
                 bad({place: 'crawler', reason: 'code', code: res.statusCode});
                 return;
@@ -61,7 +68,7 @@ async function next_page() {
                 let pgctstmatch = data.match(contex[0]);
                 let pagecontent = data.substring(pgctstmatch.index + pgctstmatch[0].length, data.match(contex[1]).index);
                 let pagetags = data.match(tagex)[1];
-                good(new Page(false, pagecontent, pagetags));
+                good(new Page(id, pagecontent, pagetags));
             } else bad({place: 'crawler', reason: 'errfound'})});
         }).on('error', (err) => {
             errorfound = true;
