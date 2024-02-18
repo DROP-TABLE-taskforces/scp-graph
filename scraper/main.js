@@ -3,6 +3,8 @@ const parser = require('./parser');
 const preproc = require('./pre-proc');
 const os = require('process');
 
+let count = 0;
+
 function loop() {
     setTimeout(() => {
         webcrawler.next().then((page) => {
@@ -16,6 +18,9 @@ function loop() {
                     if (link != 'creditlink')
                         webcrawler.add(link);
                 preproc.add(data);
+                count++;
+                if (count > 50)
+                    preproc.write();
                 loop();
             } else {
                 preproc.write();
@@ -34,8 +39,6 @@ for (let i = 99; i > 9; i--)
 for (let i = 9; i >= 0; i--)
     webcrawler.add('scp-00' + i);
 
-webcrawler.add('deconstruction-of-a-god');
-webcrawler.add('taboo');
 os.on('SIGINT', function() {
     preproc.write();
     // listener disables standard effect, must be produced by hand
