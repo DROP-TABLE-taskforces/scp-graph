@@ -1,13 +1,18 @@
+const { fstat } = require('fs');
 const https = require('https');
 const Page = require('./types').Page;
+const fs = require('fs');
 
 /** @type {string[]} */
 const queue = [];
 /** @type {Object.<string, boolean>} */
 const foundpages = {};
 
-const contex = /<div id="main-content">[ \n\t]*(.*?)[ \n\t]*<div class="licensebox">/;
-const tagex = /<div class="page-tags">[ \n\t]*<span>[ \n\t]*(.*?)[ \n\t]*<\/span>[ \n\t]*<\/div>/;
+const contex = [
+    /<div id="main-content">\s*/,
+    /\s*<div class="licensebox">/
+];
+const tagex = /<div class="page-tags">\s*<span>\s*(.*?)\s*<\/span>\s*<\/div>/;
 
 /**
  * Add new page to internal page list.
@@ -43,18 +48,25 @@ async function next_page() {
         foundpages[id] = true;
         let data = '';
         options.path = '/' + id;
+        let errorfound = false;
         https.get(options, (res) => {
+            if (errorfound) return;
             if (res.statusCode < 200 || res.statusCode > 299) {
+                errorfound = true;
                 bad({place: 'crawler', reason: 'code', code: res.statusCode});
                 return;
             }
-            res.on('data', (chunk) => { data = data + chunk; });
-            res.on('close', () => {
-                pagecontent = data.match(contex)[1];
-                pagetags = data.match(tagex)[1];
+            res.on('data', (chunk) => { data = data + chunk; })
+                .on('close', () => { if (!errorfound) {
+                let pgctstmatch = data.match(contex[0]);
+                let pagecontent = data.substring(pgctstmatch.index + pgctstmatch[0].length, data.match(contex[1]).index);
+                let pagetags = data.match(tagex)[1];
                 good(new Page(false, pagecontent, pagetags));
-            });
-        }).on('error', bad({place: 'crawler', reason: 'connection'}));
+            } else bad({place: 'crawler', reason: 'errfound'})});
+        }).on('error', (err) => {
+            errorfound = true;
+            bad({place: 'crawler', reason: 'connection', error: err});
+        });
     });
 }
 
