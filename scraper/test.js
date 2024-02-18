@@ -2,6 +2,7 @@ const webcrawler = require("./webcrawler");
 const T = require("./types");
 const parser = require('./parser');
 const preproc = require('./pre-proc');
+const fs = require('fs');
 
 webcrawler.add('scp-001');
 webcrawler.next().then((page) => {
