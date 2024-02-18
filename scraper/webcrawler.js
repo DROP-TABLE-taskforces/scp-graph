@@ -77,7 +77,7 @@ function np_aux(good, bad) {
         if (errorfound) return;
         if (res.statusCode < 200 || res.statusCode > 299) {
             if (res.statusCode == 301) {
-                queue.unshift(res.headers.location.match(/https?:\/\/scp-wiki.wikidot.com\/(.*)/)[1]);
+                queue.unshift(res.headers.location.match(/(https?:\/\/scp-wiki\.wikidot\.com|https?:\/\/www\.scp-wiki\.net)?\/(.*)/)[2]);
                 redirect(id, queue[0]);
                 foundpages[queue[0]] = false;
                 np_aux(good, bad);
