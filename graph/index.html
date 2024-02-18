@@ -7,8 +7,8 @@
     <script src="//unpkg.com/force-graph"></script>
     <!--<script src="../../dist/force-graph.js"></script>-->
     <style>
-        body {
-            font-family: "Lato", sans-serif;
+        body{
+            font-family: "Lucida Console", "Courier New", monospace;
         }
 
         .sidenav {
@@ -18,37 +18,49 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: #111;
+            background-color: black;
             overflow-x: hidden;
             transition: 0.5s;
-            padding-top: 60px;
         }
 
         .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 4vmin;
-            color: #818181;
-            display: block;
+            font-size: 16px;
             transition: 0.3s;
         }
 
-        .sidenav a:hover {
-            color: #f1f1f1;
+        .flex-col {
+            display: flex;
+            flex-direction: column;
         }
 
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
+        .flex-col > div {
+            width: 100%;
         }
 
-        @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
+        #stil1{
+            background-color: #121212;
+            text-align: center;
+            color: #9F9F9F;
         }
+        #stil2{
+            background-color: black;
+            text-align: left;
+            color: #C3C3C3;
+        }
+        #stil2:hover {
+            background: #495AD3;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flex-row > div {
+            flex: 1 1 0;
+            width: 0;
+        }
+
     </style>
 </head>
 
@@ -57,14 +69,56 @@
 <span style="font-size: 4vmin;cursor:pointer;position: absolute;left: 10px;right: 0;" onclick="openNav()">&#9776;</span>
 
 <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
+    <div class="flex-col" id="stil1">
+        <div><a style="font-weight: bold">EXAMPLE</a>
+            <div class="flex-container" id="stil2">
+                <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+            </div>
+            <div class="flex-row">
+                <div id="stil2">Example</div>
+                <div id="stil2">Example</div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div>Example</div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div>Example</div>
+            </div>
+        </div>
+        <div><a style="font-weight: bold">EXAMPLE</a>
+            <div class="flex-container" id="stil2">
+                <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+            </div>
+            <div class="flex-row">
+                <div id="stil2">Example</div>
+                <div id="stil2">Example</div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div>Example</div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div>Example</div>
+            </div>
+        </div>
+        <div><a style="font-weight: bold">EXAMPLE</a>
+            <div class="flex-container" id="stil2">
+                <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+            </div>
+            <div class="flex-row">
+                <div id="stil2">Example</div>
+                <div id="stil2">Example</div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div>Example</div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div>Example</div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="graph"></div>
+<div id="graph" ></div>
 
 <script>
     document.getElementById("graph").addEventListener("click", function (e) {
@@ -78,15 +132,11 @@
     });
 
     function openNav() {
-        document.getElementById("mySidenav").style.width = "25%";
-        let graph = document.getElementById("graph").style.left = "25%";
-        graph.style.width = "75%";
+        document.getElementById("mySidenav").style.width = "16%";
     }
 
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
-        let graph = document.getElementById("graph").style.left = "0%";
-        graph.style.width = "100%";
     }
 </script>
 
