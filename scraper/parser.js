@@ -12,7 +12,9 @@ const known_types = [
     'tale',
     'admin',
     'hub',
-    'goi'
+    'goi',
+    'author',
+    'component'
 ]
 
 /**
@@ -26,7 +28,7 @@ function get_data(page) {
     for (let match of page.text.matchAll(rexs.link))
         links.push(match[2]);
     let tags = [];
-    let type = 'unknown';
+    let type = /-hub$/.test(page.id) ? 'hub' : 'unknown';
     for (let match of page.tags.matchAll(rexs.tag)) if (match[1] == match[2]) {
         tags.push(match[1]);
         for (let ptype of known_types)
@@ -35,6 +37,7 @@ function get_data(page) {
                 break;
             }
     }
+    console.log('\ttype ' + type);
     return new Data(page.id, title, links, tags, type);
 }
 
