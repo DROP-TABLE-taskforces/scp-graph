@@ -93,7 +93,7 @@ function add_to_db(item) {
     }
     console.log('\taltered internal links');
     change_link(item.id, db.pages.length);
-    console.log('\tnew raw size ' + Math.ceil(db_raw_size) / 1024 + ' KB')
+    console.log('\tnew raw size ' + Math.ceil(db_raw_size / 1024) + ' KB')
     db.pages.push(npage);
 }
 
