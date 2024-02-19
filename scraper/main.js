@@ -19,7 +19,7 @@ function loop() {
                         webcrawler.add(link);
                 preproc.add(data);
                 count++;
-                if (count % 50 == 0) {
+                if (count % 100 == 0) {
                     console.log('backing up database to file');
                     preproc.write();
                 }
@@ -28,8 +28,9 @@ function loop() {
                 preproc.write();
             }
         }).catch((err) => {
-            if (err > 499)
+            if (err.reason == 'code' && err.code > 499)
                 setTimeout(() => loop(), 60000);
+            if (err.reason)
             preproc.write();
             console.log(JSON.stringify(err));
         });
