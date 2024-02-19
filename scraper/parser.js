@@ -29,7 +29,7 @@ function get_data(page) {
         if (!(/system:/.test(match[2]) || match[2] == '' || links.find(l => l == match[2])))
             links.push(match[2]);
     let tags = [];
-    let type = /-hub$/.test(page.id) ? 'hub' : 'unknown';
+    let type = /-hub$/.test(page.id) ? 'hub' : /^scp-/.test(page.id) ? 'scp' : 'unknown';
     for (let match of page.tags.matchAll(rexs.tag)) if (match[1] == match[2]) {
         tags.push(match[1]);
         for (let ptype of known_types)

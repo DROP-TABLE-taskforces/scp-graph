@@ -92,7 +92,8 @@ function np_aux(good, bad) {
             console.log('\tgot page');
             let pgctstmatch = data.match(contex[0]);
             let pagecontent = data.substring(pgctstmatch.index + pgctstmatch[0].length, data.match(contex[1]).index);
-            let pagetags = data.match(tagex)[1];
+            let tagmatch = data.match(tagex);
+            let pagetags = tagmatch ? tagmatch[1] : '';
             good(new Page(id, pagecontent, pagetags));
         } else bad({place: 'crawler', reason: 'errfound'})});
     }).on('error', (err) => {

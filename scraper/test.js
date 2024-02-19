@@ -4,7 +4,7 @@ const parser = require('./parser');
 const preproc = require('./pre-proc');
 const fs = require('fs');
 
-webcrawler.add('scp-4000');
+webcrawler.add('scp-3580');
 webcrawler.next().then((page) => {
     let data = parser.parse(page);
     console.log(data.title);
