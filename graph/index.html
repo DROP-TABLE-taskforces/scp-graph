@@ -349,6 +349,8 @@
 
 <script>
 
+    let Graph = null;
+
     /**
      * @param {{
      *  pages: {
@@ -371,6 +373,7 @@
                 id: idx,
                 ref: site + page.id,
                 title: page.title,
+                value: 1,
                 type: database.types[page.type],
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
@@ -381,17 +384,24 @@
                 return {
                     src: idx,
                     dst: ref,
-                    value: 1
+                    val: 1
                 };
             }));
         }, []);
 
-        console.log(graph_json.links[102]);
-        console.log(graph_json.nodes[57]);
+        Graph = ForceGraph()(document.getElementById('graph'))
+            .graphData(graph_json)
+            .nodeId('id')
+            .nodeVal('value')
+            .nodeLabel('title')
+            .nodeAutoColorBy('group')
+            .linkSource('src')
+            .linkTarget('dst');
     }
 
     fetch('../database.json').then(res => res.json()).then(proc_db);
 
+    /*
     fetch('miserables.json').then(res => res.json()).then(data => {
         const Graph = ForceGraph()
         (document.getElementById('graph'))
@@ -403,6 +413,7 @@
             .linkSource('source')
             .linkTarget('target')
     });
+    */
     openNav();
 </script>
 </body>
