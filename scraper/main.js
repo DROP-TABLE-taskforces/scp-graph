@@ -29,20 +29,21 @@ function loop() {
             }
         }).catch((err) => {
             if (err.reason == 'code' && err.code > 499)
-                setTimeout(() => loop(), 60000);
-            if (err.reason)
+                setTimeout(loop, 60000);
+            if (err.reason == 'connection')
+                setTimeout(loop, 120000);
             preproc.write();
             console.log(JSON.stringify(err));
         });
     }, 6000);
 }
 
-for (let i = 999; i > 99; i--)
-    webcrawler.add('scp-' + i);
-for (let i = 99; i > 9; i--)
-    webcrawler.add('scp-0' + i);
-for (let i = 9; i >= 0; i--)
-    webcrawler.add('scp-00' + i);
+webcrawler.add('scp-001');
+webcrawler.add('scp-000');
+for (let i = 1; i < 6; i++) {
+    webcrawler.add('scp-' + (i * 1000));
+    webcrawler.add('scp-' + (i * 1000 - 1));
+}
 
 os.on('SIGINT', function() {
     preproc.write();
