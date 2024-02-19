@@ -373,7 +373,7 @@
                 id: idx,
                 ref: site + page.id,
                 title: page.title,
-                value: page.links.length,
+                value: Math.floor(Math.sqrt(page.links.length)),
                 type: database.types[page.type],
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
