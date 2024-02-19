@@ -8,10 +8,13 @@
     <!--<script src="../../dist/force-graph.js"></script>-->
     <style>
         body{
-            font-family: "Lucida Console", "Courier New", monospace;
+            font-family: Arial;
         }
 
         .sidenav {
+            scrollbar-color: #495AD3 #2C2C2D;
+            scrollbar-width: thin;
+            direction: rtl;
             height: 100%;
             position: fixed;
             z-index: 1;
@@ -29,23 +32,6 @@
             width: 100%;
         }
 
-        #stil1{
-            font-size: 12px;
-            margin-left:8px;
-            background-color: #121212;
-            text-align: center;
-            color: #9F9F9F;
-        }
-        #stil2{
-            font-size: 12px;
-            background-color: black;
-            text-align: left;
-            color: #C3C3C3;
-        }
-        #stil2:hover {
-            background: #495AD3;
-        }
-
         .flex-row {
             display: flex;
             flex-direction: row;
@@ -56,22 +42,45 @@
             width: 0;
         }
 
+        /*style of divs*/
+
+        #stil1{
+            font-size: 11px;
+            background-color: #121212;
+            text-align: center;
+            color: #9F9F9F;
+        }
+
+        #stil2{
+            font-size: 11px;
+            background-color: black;
+            text-align: left;
+            color: #C3C3C3;
+        }
+        #stil2:hover {
+            background: #495AD3;
+        }
+
+        .title{
+            font-weight: bold;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
         /*Button animation*/
 
 
         .button {
             cursor:pointer;
             font-size: 12px;
-            padding-top: 8px;
-            padding-right: 5px;
-            padding-bottom: 8px;
-            padding-left: 10px;
+            padding-top: 7px;
+            padding-bottom: 7px;
             width: 100%;
             display: block;
             background: linear-gradient(to right, #495AD3 50%,black 50%);
             background-size: 200% 100%;
             background-position: right bottom;
-            transition: all .15s ease-out;
+            transition: all .2s ease-out;
         }
 
         .button:hover {
@@ -79,22 +88,13 @@
         }
 
         .text {
+            margin-left:8px;
             color: #C3C3C3;
             display: block;
         }
 
         /*BAR*/
 
-        .bar {
-            border-left: 8px solid #495AD3;
-            height: 100%;
-            position: absolute;
-            left: 0%;
-            top: 0;
-        }
-        .bar:hover{
-            border-left:8px solid #4D71DC;
-        }
 
     </style>
 </head>
@@ -104,9 +104,34 @@
 <span style="font-size: 4vmin;cursor:pointer;position: absolute;left: 10px;right: 0;" onclick="openNav()">&#9776;</span>
 
 <div id="mySidenav" class="sidenav">
-        <div class="bar"></div>
         <div class="flex-col" id="stil1">
-            <div><a style="font-weight: bold;margin-top: 8px;margin-bottom: 8px;">GETTING STARTED</a>
+            <div class="side-block media" style="padding: 10px 0; background: black;">
+                <div style="text-align: center;text-decoration: none;">
+                    <a style="text-decoration: none;" href="https://discord.com/invite/scp">
+                        <img src="https://scp-wiki.wikidot.com/local--files/nav:side/icon-Discord-2023.png" alt="Discord" class="image">
+                    </a>
+                    <a style="text-decoration: none;" href="https://www.tiktok.com/@scpwikiofficial?">
+                        <img src="https://scp-wiki.wdfiles.com/local--files/nav%3Aside/social-tiktok.png" alt="TikTok" class="image">
+                    </a>
+                    <a style="text-decoration: none;" href="https://www.twitch.tv/scpwiki">
+                        <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-twitch.png" alt="Twitch" class="image">
+                    </a>
+                    <a style="text-decoration: none;" href="https://www.instagram.com/scpfoundationwiki">
+                        <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-instagram.png" alt="Instagram" class="image">
+                    </a>
+                    <a style="text-decoration: none;" href="https://www.reddit.com/r/SCP">
+                        <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-reddit.png" alt="Reddit" class="image">
+                    </a>
+                    <a style="text-decoration: none;" href="https://twitter.com/scpwiki">
+                        <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-twitter.png" alt="Twitter" class="image">
+                    </a>
+                    <a style="text-decoration: none;" href="https://www.facebook.com/scpfoundation">
+                        <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-facebook.png" alt="Facebook" class="image">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <div class="title">GETTING STARTED</div>
                 <div class="flex-container" id="stil2">
                     <div class="button">
                         <div class="text">Guide for Newcomers</div>
@@ -119,10 +144,10 @@
                 </div>
                 <div class="flex-row" id="stil2">
                     <div class="button">
-                        <div class="text">Contribute</div>
+                        <div class="text">FAQ</div>
                     </div>
                     <div class="button">
-                        <div class="text">FAQ</div>
+                        <div class="text">Contribute</div>
                     </div>
                 </div>
                 <div class="flex-container" id="stil2">
@@ -132,45 +157,168 @@
                 </div>
                 <div class="flex-row" style="font-weight: bold;">
                     <div class="button">
-                        <div class="text">Main</div>
-                    </div>
-                    <div class="button">
                         <div class="text">Forum</div>
                     </div>
+                    <div class="button">
+                        <div class="text">Main</div>
+                    </div>
                 </div>
             </div>
-            <div><a style="font-weight: bold">EXAMPLE</a>
-                <div class="flex-container" id="stil2">
-                    <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
+            <div>
+                <div class="title">SCPS BY SERIES</div>
+                <div class="flex-row">
+                    <div class="button">
+                        <div class="text">V</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">IV</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">III</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">II</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">I</div>
+                    </div>
                 </div>
                 <div class="flex-row">
-                    <div id="stil2">Example</div>
-                    <div id="stil2">Example</div>
-                </div>
-                <div class="flex-container" id="stil2">
-                    <div>Example</div>
-                </div>
-                <div class="flex-container" id="stil2">
-                    <div>Example</div>
+                    <div class="button">
+                        <div class="text">VIII</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">VII</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">VI</div>
+                    </div>
                 </div>
             </div>
-            <div><a style="font-weight: bold">EXAMPLE</a>
-                <div class="flex-container" id="stil2">
-                    <a class="closebtn" onclick="closeNav()" style="cursor:pointer;">Leave</a>
-                </div>
-                <div class="flex-row">
-                    <div id="stil2">Example</div>
-                    <div id="stil2">Example</div>
-                </div>
-                <div class="flex-container" id="stil2">
-                    <div>Example</div>
-                </div>
-                <div class="flex-container" id="stil2">
-                    <div>Example</div>
+            <div>
+                <div class="title">OTHER SCP</div>
+                <div class="flex-row" id="stil2">
+                    <div class="button">
+                        <div class="text">Joke</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">Explained</div>
+                    </div>
                 </div>
                 <div class="flex-container" id="stil2">
                     <div class="button">
-                        <div class="closebtn" onclick="closeNav()" style="cursor:pointer;color: #C3C3C3;display: block;">Leave</div>
+                        <div class="text">International</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="title">FEED</div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">New Pages</div>
+                    </div>
+                </div>
+                <div class="flex-row" id="stil2">
+                    <div class="button">
+                        <div class="text">Top rated</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">Shortest</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Recent Changes</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">New Forum Posts</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="title">STORIES</div>
+                <div class="flex-row" id="stil2">
+                    <div class="button">
+                        <div class="text">Series</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">Tales Hub</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Groups of Interest</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">GoI Formats</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Canon Hub</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="title">DISCOVERY</div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Artwork Hub</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Curated Lists</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Curated Tales Series</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Tag Search</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="title">RANDOM</div>
+                <div class="flex-row">
+                    <div class="button">
+                        <div class="text">Art</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">GoI</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">Tale</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">SCP</div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">Random Page</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="title">OTHER LANGUAGES</div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text">French</div>
+                    </div>
+                    <div class="button">
+                        <div class="text">Română</div>
+                    </div>
+                    <div class="button">
+                        <div class="closebtn" onclick="closeNav()" style="cursor:pointer;color: #C3C3C3;display: block;margin-left: 8px">Leave</div>
                     </div>
                 </div>
             </div>
