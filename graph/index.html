@@ -377,7 +377,7 @@
             };
         });
         graph_json.links = database.pages.reduce((accu, elem, idx) => {
-            accu.concat(elem.links.filter(ref => typeof ref == 'number').map(ref => {
+            return accu.concat(elem.links.filter(ref => typeof ref == 'number').map(ref => {
                 return {
                     src: idx,
                     dst: ref,
