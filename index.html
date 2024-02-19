@@ -396,7 +396,9 @@
             .nodeLabel('title')
             .nodeAutoColorBy('group')
             .linkSource('src')
-            .linkTarget('dst');
+            .linkTarget('dst')
+            .velocityDelay(0.2)
+            .alphaTarget(0.2);
     }
 
     fetch('database.json').then(res => res.json()).then(proc_db);
