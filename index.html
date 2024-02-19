@@ -373,7 +373,7 @@
                 id: idx,
                 ref: site + page.id,
                 title: page.title,
-                value: Math.floor(Math.sqrt(page.links.length)),
+                value: Math.sqrt(page.links.length - 1),
                 type: database.types[page.type],
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
@@ -384,7 +384,7 @@
                 return {
                     src: idx,
                     dst: ref,
-                    val: elem.links.length + database.pages[ref].links.length + 1
+                    val: Math.sqrt(elem.links.length) + Math.sqrt(database.pages[ref].links.length)
                 };
             }));
         }, []);

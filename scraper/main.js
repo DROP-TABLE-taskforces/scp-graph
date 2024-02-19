@@ -34,7 +34,7 @@ function loop() {
     }, 4000);
 }
 
-for (let i = 3999; i > 99; i--)
+for (let i = 999; i > 99; i--)
     webcrawler.add('scp-' + i);
 for (let i = 99; i > 9; i--)
     webcrawler.add('scp-0' + i);
