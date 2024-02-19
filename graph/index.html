@@ -348,9 +348,9 @@
 </script>
 
 <script>
-    let db_fetch = await fetch('../database.json');
+
     /**
-     * @type {{
+     * @param {{
      *  pages: {
      *      id: string,
      *      title: string,
@@ -360,34 +360,37 @@
      *  }[],
      *  tags: string[],
      *  types: string[]
-     * }}
+     * }} database The database.
+     * @returns {void} Nothing.
      */
-    let database = await db_fetch.json();
-    
-    const site = 'https://scp-wiki.wikidot.com/'
-    let graph_json = {};
-    graph_json.nodes = database.pages.map((page, idx) => {
-        return {
-            id: idx,
-            ref: site + page.id,
-            title: page.title,
-            type: database.types[page.type],
-            tags: page.tags.map(idx => database.tags[idx]),
-            links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
-        };
-    });
-    graph_json.links = database.pages.reduce((accu, elem, idx) => {
-        accu.concat(elem.links.filter(ref => typeof ref == 'number').map(ref => {
+    function proc_db(database) {
+        const site = 'https://scp-wiki.wikidot.com/'
+        let graph_json = {};
+        graph_json.nodes = database.pages.map((page, idx) => {
             return {
-                src: idx,
-                dst: ref,
-                value: 1
+                id: idx,
+                ref: site + page.id,
+                title: page.title,
+                type: database.types[page.type],
+                tags: page.tags.map(idx => database.tags[idx]),
+                links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
             };
-        }));
-    }, []);
+        });
+        graph_json.links = database.pages.reduce((accu, elem, idx) => {
+            accu.concat(elem.links.filter(ref => typeof ref == 'number').map(ref => {
+                return {
+                    src: idx,
+                    dst: ref,
+                    value: 1
+                };
+            }));
+        }, []);
 
-    console.log(graph_json.links[102]);
-    console.log(graph_json.nodes[57]);
+        console.log(graph_json.links[102]);
+        console.log(graph_json.nodes[57]);
+    }
+
+    fetch('../database.json').then(res => res.json()).then(proc_db);
 
     fetch('miserables.json').then(res => res.json()).then(data => {
         const Graph = ForceGraph()
