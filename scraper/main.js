@@ -31,7 +31,7 @@ function loop() {
             preproc.write();
             console.log(JSON.stringify(err));
         });
-    }, 4000);
+    }, 6000);
 }
 
 for (let i = 999; i > 99; i--)
