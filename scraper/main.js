@@ -8,7 +8,7 @@ let count = 0;
 function loop() {
     setTimeout(() => {
         webcrawler.next().then((page) => {
-            if (page.id) {
+            if (page && page.id) {
                 let data = parser.parse(page);
                 if (data.type == 'component') {
                     loop();
@@ -28,6 +28,8 @@ function loop() {
                 preproc.write();
             }
         }).catch((err) => {
+            if (err > 499)
+                setTimeout(() => loop(), 60000);
             preproc.write();
             console.log(JSON.stringify(err));
         });

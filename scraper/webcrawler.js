@@ -21,11 +21,18 @@ const tagex = /<div class="page-tags">\s*<span>\s*(.*?)\s*<\/span>\s*<\/div>/;
  * @returns {void} Nothing.
  */
 function add_to_queue(id) {
-    if (!(foundpages.hasOwnProperty(id))) {
+    if (!(foundpages.hasOwnProperty(TSH(id)))) {
         queue.push(id);
-        foundpages[id] = false;
-        queue_size += id.length * 2 + 16;
+        foundpages[TSH(id)] = false;
+        queue_size += id.length + 25;
     }
+}
+
+const TSH = (s) =>{
+    let h = 123456789;
+    for(let i = 0, h = 9; i < s.length;)
+        h = Math.imul(h ^ s.charCodeAt(i++), 387420489);
+    return h ^ (h >>> 9);
 }
 
 const options = {
@@ -57,7 +64,7 @@ options.agent = https.Agent(options);
  * @returns {void} Nothing.
  */
 function np_aux(good, bad) {
-    while (foundpages[queue[0]]) {
+    while (foundpages[TSH(queue[0])]) {
         queue_size -= queue.shift().length;
     }
     if (queue.length == 0) {
@@ -69,7 +76,7 @@ function np_aux(good, bad) {
     let currdate = new Date();
     console.log(currdate.toLocaleDateString() + ' ' + currdate.toLocaleTimeString() + ' - ' + id);
     console.log('\tqueue size ' + queue.length + ' / ' + Math.ceil(queue_size / 1024) + ' KB');
-    foundpages[id] = true;
+    foundpages[TSH(id)] = true;
     let data = '';
     options.path = '/' + id;
     let errorfound = false;
@@ -95,10 +102,10 @@ function np_aux(good, bad) {
             let tagmatch = data.match(tagex);
             let pagetags = tagmatch ? tagmatch[1] : '';
             good(new Page(id, pagecontent, pagetags));
-        } else bad({place: 'crawler', reason: 'errfound'})});
+        } else bad({place: 'crawler', reason: 'errfound', page: id})});
     }).on('error', (err) => {
         errorfound = true;
-        bad({place: 'crawler', reason: 'connection', error: err});
+        bad({place: 'crawler', reason: 'connection', error: err, page: id});
     });
 }
 
