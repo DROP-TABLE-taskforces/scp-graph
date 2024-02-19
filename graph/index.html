@@ -373,7 +373,7 @@
                 id: idx,
                 ref: site + page.id,
                 title: page.title,
-                value: 1,
+                value: page.links.length,
                 type: database.types[page.type],
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
@@ -384,7 +384,7 @@
                 return {
                     src: idx,
                     dst: ref,
-                    val: 10
+                    val: elem.links.length + database.pages[ref].links.length + 1
                 };
             }));
         }, []);
