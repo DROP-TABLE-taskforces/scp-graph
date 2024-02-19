@@ -24,7 +24,7 @@ function add_to_queue(id) {
     if (!(foundpages.hasOwnProperty(id))) {
         queue.push(id);
         foundpages[id] = false;
-        queue_size += id.length + 25;
+        queue_size += 2 * id.length + 18;
     }
 }
 
