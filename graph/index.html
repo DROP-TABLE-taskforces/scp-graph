@@ -348,6 +348,7 @@
 </script>
 
 <script>
+    let db_fetch = await fetch('../database.json');
     /**
      * @type {{
      *  pages: {
@@ -361,7 +362,7 @@
      *  types: string[]
      * }}
      */
-    let database = await (await fetch('../database.json')).json();
+    let database = await db_fetch.json();
     
     const site = 'https://scp-wiki.wikidot.com/'
     let graph_json = {};
