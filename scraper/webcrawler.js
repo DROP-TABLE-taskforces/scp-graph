@@ -21,18 +21,11 @@ const tagex = /<div class="page-tags">\s*<span>\s*(.*?)\s*<\/span>\s*<\/div>/;
  * @returns {void} Nothing.
  */
 function add_to_queue(id) {
-    if (!(foundpages.hasOwnProperty(TSH(id)))) {
+    if (!(foundpages.hasOwnProperty(id))) {
         queue.push(id);
-        foundpages[TSH(id)] = false;
+        foundpages[id] = false;
         queue_size += id.length + 25;
     }
-}
-
-const TSH = (s) =>{
-    let h = 123456789;
-    for(let i = 0, h = 9; i < s.length;)
-        h = Math.imul(h ^ s.charCodeAt(i++), 387420489);
-    return h ^ (h >>> 9);
 }
 
 const options = {
@@ -64,7 +57,7 @@ options.agent = https.Agent(options);
  * @returns {void} Nothing.
  */
 function np_aux(good, bad) {
-    while (foundpages[TSH(queue[0])]) {
+    while (foundpages[queue[0]]) {
         queue_size -= queue.shift().length;
     }
     if (queue.length == 0) {
@@ -76,7 +69,7 @@ function np_aux(good, bad) {
     let currdate = new Date();
     console.log(currdate.toLocaleDateString() + ' ' + currdate.toLocaleTimeString() + ' - ' + id);
     console.log('\tqueue size ' + queue.length + ' / ' + Math.ceil(queue_size / 1024) + ' KB');
-    foundpages[TSH(id)] = true;
+    foundpages[id] = true;
     let data = '';
     options.path = '/' + id;
     let errorfound = false;
