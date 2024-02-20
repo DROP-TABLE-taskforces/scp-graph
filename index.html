@@ -400,6 +400,7 @@
                 }, Array(10));
             for (let l of inrefs.filter(l => accu.hasOwnProperty(l)))
                 accu[l][idx] = (accu[l][idx] || 0) + 1;
+            return accu;
         }, Array(database.pages.length));
         graph_json.links = [];
         for (let s in links)
