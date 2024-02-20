@@ -25,7 +25,7 @@ function get_data(page) {
     let title = page.text.match(rexs.title)[1];
     let links = [];
     for (let match of page.text.matchAll(rexs.link))
-        if (!(/(component|system):/.test(match[2]) || match[2] == '' || links.find(l => l == match[2])))
+        if (!(/(component|system):/.test(match[2]) || match[2] == ''))
             links.push(match[2]);
     let tags = [];
     let type = /-hub$/.test(page.id) ? 'hub' : /^scp-/.test(page.id) ? 'scp' : 'unknown';

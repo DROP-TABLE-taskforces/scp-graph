@@ -1,6 +1,5 @@
-const { fstat } = require('fs');
 const https = require('https');
-const Page = require('./types').Page;
+const { PError, Page } = require('./types');
 const redirect = require('./pre-proc').redirect;
 
 /** @type {string[]} */
@@ -18,10 +17,11 @@ const tagex = /<div class="page-tags">\s*<span>\s*(.*?)\s*<\/span>\s*<\/div>/;
 /**
  * Add new page to internal page list.
  * @param {string} id New page reference to memorize. 
+ * @param {boolean?} force Force page addition when true.
  * @returns {void} Nothing.
  */
-function add_to_queue(id) {
-    if (!(foundpages.hasOwnProperty(id))) {
+function add_to_queue(id, force) {
+    if (force || !foundpages.hasOwnProperty(id)) {
         queue.push(id);
         foundpages[id] = false;
         queue_size += 2 * id.length + 18;
@@ -46,7 +46,7 @@ options.agent = https.Agent(options);
 
 /**
  * @callback CatchCallback
- * @param {any} err Error object.
+ * @param {PError} err Error object.
  * @returns {void} Nothing.
  */
 
@@ -84,7 +84,7 @@ function np_aux(good, bad) {
                 return;
             }
             errorfound = true;
-            bad({place: 'crawler', reason: 'code', code: res.statusCode});
+            bad(new PError('crawler', 'code', id, {code: res.statusCode}));
             return;
         }
         res.on('data', (chunk) => { data = data + chunk; })
@@ -98,7 +98,7 @@ function np_aux(good, bad) {
         } else bad({place: 'crawler', reason: 'errfound', page: id})});
     }).on('error', (err) => {
         errorfound = true;
-        bad({place: 'crawler', reason: 'connection', error: err, page: id});
+        bad(new PError('crawler', 'connection', id, err));
     });
 }
 

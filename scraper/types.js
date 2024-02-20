@@ -2,7 +2,6 @@
  * Class that contains relevant blocks from the page.
  * @class
  * @constructor
- * @public
  */
 class Page {
     /**
@@ -15,19 +14,16 @@ class Page {
         /**
          * Page reference.
          * @type {string}
-         * @public
          */
         this.id = id;
         /**
          * Page content as long string, if not found before.
          * @type {string}
-         * @public
          */
         this.text = text;
         /**
          * Tag list of page as long string, if not found before.
          * @type {string}
-         * @public
          */
         this.tags = tags;
     }
@@ -37,7 +33,6 @@ class Page {
  * Class containing extracted information from a page.
  * @class
  * @constructor
- * @public
  */
 class Data {
     /**
@@ -52,35 +47,79 @@ class Data {
         /**
          * Page path / reference.
          * @type {string}
-         * @public
          */
         this.id = id;
         /**
          * Page title.
          * @type {string}
-         * @public
          */
         this.title = title;
         /**
          * Links found within the page.
          * @type {string[]}
-         * @public
          */
         this.links = links;
         /**
          * Tags found within the page.
          * @type {string[]}
-         * @public
          */
         this.tags = tags;
         /**
          * Type of page.
          * @type {string}
-         * @public
          */
         this.type = type;
     }
 }
 
+/**
+ * Class containing personalized errors.
+ * @class
+ * @constructor
+ 
+ */
+class PError {
+    /**
+     * @type {any}
+     */
+    #_more = {};
+    /**
+     * Make new error object.
+     * @param {string} place Module in which the error occured.
+     * @param {string} reason Reason for error appearance.
+     * @param {string} page Page identifier, as string.
+     * @param {any} more Object containing other properties that should be attached to the error.
+     */
+    constructor(place, reason, page, more) {
+        if (!more) more = {};
+        /**
+         * Module in which the error occured.
+         * @type {string}
+         */
+        this.place = place;
+        /**
+         * Assumed reason for which the error occured.
+         * @type {string}
+         */
+        this.reason = reason;
+        /**
+         * Scraped page for which the error occured.
+         * @type {string}
+         */
+        this.page = page;
+        this.#_more = more;
+        for (let field in more)
+            this[field] = more[field];
+    }
+
+    str = () => {
+        return 'PError @ ' + this.place
+            + '; cause ' + this.reason
+            + ', page' + this.page
+            + '. Info: ' + JSON.stringify(this.#_more);
+    }
+}
+
 module.exports.Page = Page;
 module.exports.Data = Data;
+module.exports.PError = PError;

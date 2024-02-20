@@ -355,9 +355,10 @@
 <script>
 
     let Graph = null;
-
+    let filters = null;
     /**
-     * @param {{
+     * The JSON database, pulled once and reprocessed to infinity.
+     * @type {{
      *  pages: {
      *      id: string,
      *      title: string,
@@ -367,10 +368,11 @@
      *  }[],
      *  tags: string[],
      *  types: string[]
-     * }} database The database.
-     * @returns {void} Nothing.
+     * }}
      */
-    function proc_db(database) {
+    let database = null;
+
+    function proc_db() {
         const site = 'https://scp-wiki.wikidot.com/'
         let graph_json = {};
         graph_json.nodes = database.pages.map((page, idx) => {
@@ -381,7 +383,9 @@
                 value: Math.sqrt(page.links.length - 1),
                 type: database.types[page.type],
                 tags: page.tags.map(idx => database.tags[idx]),
-                links: page.links.map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
+                links: page.links
+                    .filter((val, idx, arr) => arr.indexOf(val) === idx)
+                    .map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
             };
         });
         graph_json.links = database.pages.reduce((accu, elem, idx) => {
@@ -389,11 +393,13 @@
                 return {
                     src: idx,
                     dst: ref,
-                    val: Math.sqrt(elem.links.length)
+                    val: elem.links.filter(l => l == ref).length
                 };
             }));
         }, []);
 
+        if (Graph)
+            Graph.
         Graph = ForceGraph()(document.getElementById('graph'))
             .graphData(graph_json)
             .nodeId('id')
@@ -418,7 +424,10 @@
             });
     }
 
-    fetch('database.json').then(res => res.json()).then(proc_db);
+    fetch('database.json').then(res => res.json()).then((db) => {
+        database = db;
+        proc_db();
+    });
 
     openNav();
 </script>

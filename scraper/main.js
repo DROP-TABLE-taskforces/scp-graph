@@ -1,6 +1,7 @@
 const webcrawler = require('./webcrawler');
 const parser = require('./parser');
 const preproc = require('./pre-proc');
+const T = require('./types');
 const os = require('process');
 
 let count = 0;
@@ -27,13 +28,12 @@ function loop() {
             } else {
                 preproc.write();
             }
-        }).catch((err) => {
+        }).catch((/** @type {T.PError} */ err) => {
             if (err.reason == 'code' && err.code > 499)
-                setTimeout(loop, 60000);
-            if (err.reason == 'connection')
-                setTimeout(loop, 120000);
+                webcrawler.add(err.page, true);
+            setTimeout(loop, 120000);
             preproc.write();
-            console.log(JSON.stringify(err));
+            console.log(err.str());
         });
     }, 6000);
 }
