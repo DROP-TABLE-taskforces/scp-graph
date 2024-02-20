@@ -28,6 +28,7 @@ let db_raw_size = 0;
  * @returns {number} Number of links that remain unexplored.
  */
 function restore_old_links() {
+    db = JSON.parse(fs.readFileSync('../database.json', {encoding: 'utf-8'}));
     let count = 0;
     for (let page of db.pages)
         for (let link of page.links)
