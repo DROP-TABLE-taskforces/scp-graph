@@ -363,7 +363,7 @@
      *      id: string,
      *      title: string,
      *      type: number,
-     *      links: (number | string)[],
+     *      links: (string | number)[],
      *      tags: number[],
      *  }[],
      *  tags: string[],
@@ -385,19 +385,26 @@
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links
                     .filter((val, idx, arr) => arr.indexOf(val) === idx)
-                    .map((ref) => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
+                    .map(ref => site + (typeof ref == 'number' ? db.pages[ref].id : ref))
             };
         });
-        graph_json.links = database.pages.reduce((accu, elem, idx) => {
-            return accu.concat(elem.links.filter(ref => typeof ref == 'number').map(ref => {
-                return {
-                    src: idx,
-                    dst: ref,
-                    val: elem.links.filter(l => l == ref).length
-                };
-            }));
-        }, []);
-
+        let links = database.pages.reduce((accu, elem, idx) => {
+            let inrefs = elem.links.filter(l => typeof l == 'number');
+            links[idx] = inrefs.filter(l => !accu.hasOwnProperty(l))
+                .reduce((obj, l) => {
+                    if (obj.hasOwnProperty(l))
+                        obj[l]++;
+                    else
+                        obj[l] = 1;
+                    return obj;
+                }, Array(10));
+            for (let l of inrefs.filter(l => accu.hasOwnProperty(l)))
+                accu[l][idx] = (accu[l][idx] || 0) + 1;
+        }, Array(database.pages.length));
+        graph_json.links = [];
+        for (let s in links)
+            for (let d in links[s])
+                graph_json.push({src: s, dst: d, val: links[s][d]});
         Graph = ForceGraph()(document.getElementById('graph'))
             .graphData(graph_json)
             .nodeId('id')
