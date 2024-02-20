@@ -388,7 +388,7 @@
                     .map(ref => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
             };
         });
-        /** @type {Object.<number, Object.<number, number>>} */
+        /** @type {number[][]} */
         let links = database.pages.reduce((accu, elem, idx) => {
             /** @type {number[]} */
             let inrefs = elem.links.filter(l => typeof l == 'number');
@@ -396,15 +396,13 @@
                 .reduce((obj, l) => {
                     obj[l] = (obj[l] || 0) + 1;
                     return obj;
-                }, {});
+                }, Array(0));
             for (let l of inrefs.filter(l => accu.hasOwnProperty(l)))
                 accu[l][idx] = (accu[l][idx] || 0) + 1;
             return accu;
-        }, {});
+        }, Array(0));
         graph_json.links = [];
-        for (let s of Object.keys(links)) if (typeof s == 'number')
-            for (let d in Object.keys(links[s])) if (typeof d == 'number')
-                graph_json.links.push({src: s, dst: d, val: links[s][d]});
+        links.forEach((ds, s) => ds.forEach((v, d) => graph_json.links.push({src: s, dst: d, val: links[s][d]})));
         Graph = ForceGraph()(document.getElementById('graph'))
             .graphData(graph_json)
             .nodeId('id')
