@@ -78,7 +78,7 @@
             width: 100%;
             display: block;
             background: linear-gradient(to right, #495AD3 50%,black 50%);
-            background-size: 200% 100%;
+            background-size: 201% 100%;
             background-position: right bottom;
             transition: all .2s ease-out;
         }
@@ -131,36 +131,41 @@
                 </div>
             </div>
             <div>
-                <div class="title">GETTING STARTED</div>
+                <div class="title">OFFICIAL WEBSITE URLS</div>
                 <div class="flex-container" id="stil2">
                     <div class="button">
-                        <div class="text">Guide for Newcomers</div>
+                        <div class="text"><a href="https://scp-wiki.wikidot.com/guide-for-newcomers" style="text-decoration: none;color: #C3C3C3">Guide for Newcomers</a></div>
                     </div>
                 </div>
                 <div class="flex-container" id="stil2">
                     <div class="button">
-                        <div class="text">Join the site</div>
-                    </div>
-                </div>
-                <div class="flex-row" id="stil2">
-                    <div class="button">
-                        <div class="text">FAQ</div>
-                    </div>
-                    <div class="button">
-                        <div class="text">Contribute</div>
-                    </div>
-                </div>
-                <div class="flex-container" id="stil2">
-                    <div class="button">
-                        <div class="text">Universe Hub</div>
+                        <div class="text"><a href="https://scp-wiki.wikidot.com/system:join" style="text-decoration: none;color: #C3C3C3">Join the Site</a></div>
                     </div>
                 </div>
                 <div class="flex-row" style="font-weight: bold;">
                     <div class="button">
-                        <div class="text">Forum</div>
+                        <div class="text"><a href="https://scp-wiki.wikidot.com/forum:start" style="text-decoration: none;color: #C3C3C3">Forum</a></div>
                     </div>
                     <div class="button">
-                        <div class="text">Main</div>
+                        <div class="text"><a href="https://scp-wiki.wikidot.com/" style="text-decoration: none;color: #C3C3C3">Main</a></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="title">NODE INFORMATION</div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text"><a id="headlink" href="" style="text-decoration: none;color: #C3C3C3">[NO NODE SELECTED]</a></div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text"><a id="connections" href="" style="text-decoration: none;color: #C3C3C3">[NO NODE SELECTED]</a></div>
+                    </div>
+                </div>
+                <div class="flex-container" id="stil2">
+                    <div class="button">
+                        <div class="text"><a id="type" href="" style="text-decoration: none;color: #C3C3C3">[NO NODE SELECTED]</a></div>
                     </div>
                 </div>
             </div>
@@ -394,28 +399,27 @@
             .nodeId('id')
             .nodeVal('value')
             .nodeLabel('title')
-            .nodeAutoColorBy('group')
+            .nodeAutoColorBy('type')
             .linkSource('src')
             .linkTarget('dst')
-            .velocityDelay(0.2)
-            .alphaTarget(0.2);
+            //.velocityDelay(0.2)
+            //.alphaTarget(0.2)
+            .onNodeClick(node => {
+                // Center/zoom on node
+                Graph.centerAt(node.x, node.y, 1000);
+                Graph.zoom(8, 2000);
+                let titletag = document.getElementById("headlink");
+                titletag.innerHTML="Access fileserv &#9657;"+node.title;
+                titletag.href=node.ref;
+                let connectiontag = document.getElementById("connections");
+                connectiontag.innerHTML = "Number of Edges &#9657;"+node.links.length;
+                let typetag = document.getElementById("type");
+                typetag.innerHTML = "Type of Node &#9657;"+node.type.toUpperCase();
+            });
     }
 
     fetch('database.json').then(res => res.json()).then(proc_db);
 
-    /*
-    fetch('miserables.json').then(res => res.json()).then(data => {
-        const Graph = ForceGraph()
-        (document.getElementById('graph'))
-            .graphData(data)
-            .nodeId('id')
-            .nodeVal('val')
-            .nodeLabel('id')
-            .nodeAutoColorBy('group')
-            .linkSource('source')
-            .linkTarget('target')
-    });
-    */
     openNav();
 </script>
 </body>
