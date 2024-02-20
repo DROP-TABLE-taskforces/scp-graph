@@ -385,7 +385,7 @@
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links
                     .filter((val, idx, arr) => arr.indexOf(val) === idx)
-                    .map(ref => site + (typeof ref == 'number' ? db.pages[ref].id : ref))
+                    .map(ref => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
             };
         });
         let links = database.pages.reduce((accu, elem, idx) => {
