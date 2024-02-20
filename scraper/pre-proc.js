@@ -15,7 +15,7 @@ const webcrawler = require('./webcrawler');
  *  types: string[]
  * }}
  */
-const db = {
+let db = {
     pages: [],
     tags: [],
     types: []
