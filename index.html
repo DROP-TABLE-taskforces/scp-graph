@@ -154,8 +154,8 @@
             <div>
                 <div class="title">NODE INFORMATION</div>
                 <div class="flex-container" id="stil2">
-                    <div class="button">
-                        <div class="text"><a id="headlink" href="" style="text-decoration: none;color: #C3C3C3">[NO NODE SELECTED]</a></div>
+                    <div onclick="GoLink()" id="pagelink" class="button">
+                        <div class="text"><a id="headlink" style="text-decoration: none;color: #C3C3C3">[NO NODE SELECTED]</a></div>
                     </div>
                 </div>
                 <div class="flex-container" id="stil2">
@@ -168,6 +168,9 @@
                         <div class="text"><a id="type" href="" style="text-decoration: none;color: #C3C3C3">[NO NODE SELECTED]</a></div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <div id="parenttag" class="title">TAGS OF NODE</div>
             </div>
             <div>
                 <div class="title">SCPS BY SERIES</div>
@@ -333,6 +336,15 @@
 <div id="graph" ></div>
 
 <script>
+    let thelink="";
+
+    /// Sidenav STUFF
+
+    function GoLink()
+    {
+        window.open(thelink);
+    }
+
     document.getElementById("graph").addEventListener("click", function (e) {
         let x =document.getElementsByClassName("graph-tooltip")[0].style.left;
         let y =document.getElementsByClassName("graph-tooltip")[0].style.top;
@@ -350,9 +362,6 @@
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
-</script>
-
-<script>
 
     let Graph = null;
     let filters = null;
@@ -411,21 +420,47 @@
             .nodeAutoColorBy('type')
             .linkSource('src')
             .linkTarget('dst')
-            //.d3VelocityDecay(0.2)
-            //.d3AlphaMin(0.2)
+
+            /// NODE INFORMATION FUNCTIONS
+
             .onNodeClick(node => {
                 // Center/zoom on node
                 Graph.centerAt(node.x, node.y, 1000);
                 Graph.zoom(8, 2000);
                 let titletag = document.getElementById("headlink");
                 titletag.innerHTML="Access fileserv &#9657;"+node.title;
-                titletag.href=node.ref;
+                thelink=node.ref;
                 let connectiontag = document.getElementById("connections");
                 connectiontag.innerHTML = "Number of Edges &#9657;"+node.links.length;
                 let typetag = document.getElementById("type");
                 typetag.innerHTML = "Type of Node &#9657;"+node.type.toUpperCase();
+
+                let tagpar=document.getElementById("parenttag");
+                tagpar.innerHTML="TAGS OF NODE";
+                tagpar.className="title";
+                const numberoftags=3;
+                for(let i=0;i<node.tags.length/numberoftags;i++)
+                {
+                    let newDiv = document.createElement("div");
+                    newDiv.className="flex-row";
+                    tagpar.appendChild(newDiv);
+                    let max;
+                    if(i*numberoftags+numberoftags<node.tags.length)
+                        max=node.tags/length;
+                    else
+                        max=i*numberoftags+numberoftags;
+                    for(let j=i*numberoftags;j<max;j++)
+                    {
+                        let newbutton = document.createElement("div");
+                        newbutton.className="button";
+                        newbutton.innerHTML=`<div className="text">`+node.tags[j]+`</div>`;
+                        newDiv.appendChild(newbutton);
+                    }
+                }
             });
     }
+
+    /// LOADING DATABASE
 
     fetch('database.json').then(res => res.json()).then((db) => {
         database = db;
