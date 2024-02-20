@@ -8,12 +8,15 @@ const rexs = {
 }
 
 const known_types = [
-    'scp',
-    'tale',
-    'admin',
+    'interview',
+    'experiment',
+    'resource',
+    'author',
     'hub',
     'goi',
-    'author'
+    'tale',
+    'scp',
+    'admin'
 ]
 
 /**
@@ -25,8 +28,8 @@ function get_data(page) {
     let title = page.text.match(rexs.title)[1];
     let links = [];
     for (let match of page.text.matchAll(rexs.link))
-        if (!(/(component|system):/.test(match[2]) || match[2] == ''))
-            links.push(match[2]);
+        if (!(/(component|system|archived):/.test(match[2]) || match[2] == ''))
+            links.push(match[2].split('#')[0]);
     let tags = [];
     let type = /-hub$/.test(page.id) ? 'hub' : /^scp-/.test(page.id) ? 'scp' : 'unknown';
     for (let match of page.tags.matchAll(rexs.tag))
