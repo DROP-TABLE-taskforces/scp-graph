@@ -405,7 +405,7 @@
         graph_json.links = [];
         for (let s in links)
             for (let d in links[s])
-                graph_json.push({src: s, dst: d, val: links[s][d]});
+                graph_json.links.push({src: s, dst: d, val: links[s][d]});
         Graph = ForceGraph()(document.getElementById('graph'))
             .graphData(graph_json)
             .nodeId('id')
