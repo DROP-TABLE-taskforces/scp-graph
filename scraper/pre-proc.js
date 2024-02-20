@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { title } = require('process');
-const Data = require('./types').Data;
+const { Data } = require('./types');
+const webcrawler = require('./webcrawler');
 
 /**
  * @type {{
@@ -22,6 +22,19 @@ const db = {
 };
 
 let db_raw_size = 0;
+
+/**
+ * Restore old, unwalked links, if any exist.
+ * @returns {number} Number of links that remain unexplored.
+ */
+function restore_old_links() {
+    let count = 0;
+    for (let page of db.pages)
+        for (let link of page.links)
+            if (typeof link == 'string')
+                count += webcrawler.add(link) ? 1 : 0;
+    return count;
+}
 
 /**
  * Change a string identifier that returns a 301 into the header provided location.
@@ -100,3 +113,4 @@ function add_to_db(item) {
 module.exports.add = add_to_db;
 module.exports.write = () => { fs.writeFileSync('../database.json', JSON.stringify(db), {encoding: 'utf-8'}); };
 module.exports.redirect = change_link;
+module.exports.restore = restore_old_links;

@@ -1,5 +1,4 @@
-const Page = require('./types').Page;
-const Data = require('./types').Data;
+const { Page, Data } = require('./types');
 
 const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,

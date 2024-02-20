@@ -18,14 +18,16 @@ const tagex = /<div class="page-tags">\s*<span>\s*(.*?)\s*<\/span>\s*<\/div>/;
  * Add new page to internal page list.
  * @param {string} id New page reference to memorize. 
  * @param {boolean?} force Force page addition when true.
- * @returns {void} Nothing.
+ * @returns {boolean} True if page was added, false otherwise.
  */
 function add_to_queue(id, force) {
-    if (force || !foundpages.hasOwnProperty(id)) {
+    let test = force || !foundpages.hasOwnProperty(id);
+    if (test) {
         queue.push(id);
         foundpages[id] = false;
         queue_size += 2 * id.length + 18;
     }
+    return test;
 }
 
 const options = {

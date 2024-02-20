@@ -38,11 +38,13 @@ function loop() {
     }, 6000);
 }
 
-webcrawler.add('scp-001');
-webcrawler.add('scp-000');
-for (let i = 1; i < 6; i++) {
-    webcrawler.add('scp-' + (i * 1000));
-    webcrawler.add('scp-' + (i * 1000 - 1));
+if (preproc.restore() == 0) {
+    webcrawler.add('scp-001');
+    webcrawler.add('scp-000');
+    for (let i = 1; i < 6; i++) {
+        webcrawler.add('scp-' + (i * 1000));
+        webcrawler.add('scp-' + (i * 1000 - 1));
+    }
 }
 
 os.on('SIGINT', function() {
