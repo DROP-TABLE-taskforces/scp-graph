@@ -403,8 +403,8 @@
             return accu;
         }, Array(database.pages.length));
         graph_json.links = [];
-        for (let s in links)
-            for (let d in links[s])
+        for (let s in links) if (typeof s == 'number')
+            for (let d in links[s]) if (typeof d == 'number')
                 graph_json.links.push({src: s, dst: d, val: links[s][d]});
         Graph = ForceGraph()(document.getElementById('graph'))
             .graphData(graph_json)
