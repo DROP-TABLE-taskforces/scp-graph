@@ -390,7 +390,7 @@
         });
         let links = database.pages.reduce((accu, elem, idx) => {
             let inrefs = elem.links.filter(l => typeof l == 'number');
-            links[idx] = inrefs.filter(l => !accu.hasOwnProperty(l))
+            accu[idx] = inrefs.filter(l => !accu.hasOwnProperty(l))
                 .reduce((obj, l) => {
                     if (obj.hasOwnProperty(l))
                         obj[l]++;
