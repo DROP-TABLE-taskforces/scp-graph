@@ -12,6 +12,7 @@ const known_types = [
     'resource',
     'author',
     'hub',
+    'goi-format',
     'goi',
     'tale',
     'scp',
