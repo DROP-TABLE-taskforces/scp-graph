@@ -406,8 +406,8 @@
             .nodeAutoColorBy('type')
             .linkSource('src')
             .linkTarget('dst')
-            .d3VelocityDecay(0.2)
-            .d3AlphaMin(0.2)
+            //.d3VelocityDecay(0.2)
+            //.d3AlphaMin(0.2)
             .onNodeClick(node => {
                 // Center/zoom on node
                 Graph.centerAt(node.x, node.y, 1000);
