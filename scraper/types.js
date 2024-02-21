@@ -70,6 +70,12 @@ class Data {
          */
         this.type = type;
     }
+
+    str = () => {
+        return this.title + ' @ /' + this.id
+            + ";" + this.tags.reduce((accu, tag) => accu + ' ' + tag, '')
+            + this.links.reduce((accu, link) => accu + '\n\t' + link, '');
+    }
 }
 
 /**
@@ -115,7 +121,7 @@ class PError {
     str = () => {
         return 'PError @ ' + this.place
             + '; cause ' + this.reason
-            + ', page' + this.page
+            + ', page ' + this.page
             + '. Info: ' + JSON.stringify(this.#_more);
     }
 }

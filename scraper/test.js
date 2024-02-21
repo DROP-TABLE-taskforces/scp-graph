@@ -3,14 +3,10 @@ const T = require("./types");
 const parser = require('./parser');
 const preproc = require('./pre-proc');
 const fs = require('fs');
+const os = require('process');
 
-webcrawler.add('scp-3580');
-webcrawler.next().then((page) => {
+webcrawler.add('wrong-proposal');
+webcrawler.next().then(page => {
     let data = parser.parse(page);
-    console.log(data.title);
-    console.log(data.tags);
-    console.log(data.type);
-    console.log(data.links);
-}).catch((err) => {
-    console.log('Error: ' + JSON.stringify(err));
+    console.log(data.str());
 });

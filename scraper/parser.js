@@ -2,7 +2,7 @@ const { Page, Data } = require('./types');
 
 const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,
-    link: /href="(https?:\/\/scp-wiki\.wikidot\.com|https?:\/\/www\.scp-wiki\.net)?\/(.*?)"/g,
+    link: /href="(https?:\/\/scp-wiki\.wikidot\.com)?\/(.*?)"/g,
     tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g
 }
 
@@ -27,9 +27,11 @@ const known_types = [
 function get_data(page) {
     let title = page.text.match(rexs.title)[1];
     let links = [];
+    console.log('\ttitle ' + title);
     for (let match of page.text.matchAll(rexs.link))
         if (!(/(component|system|archived):/.test(match[2]) || match[2] == ''))
             links.push(match[2].split('#')[0]);
+    console.log('\tgot links');
     let tags = [];
     let type = /-hub$/.test(page.id) ? 'hub' : /^scp-/.test(page.id) ? 'scp' : 'unknown';
     for (let match of page.tags.matchAll(rexs.tag))

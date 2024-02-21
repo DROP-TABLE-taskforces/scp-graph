@@ -38,7 +38,7 @@ function loop() {
     }, 6000);
 }
 
-if (preproc.restore() == 0) {
+function fresh() {
     webcrawler.add('scp-001');
     webcrawler.add('scp-000');
     for (let i = 1; i < 6; i++) {
@@ -46,6 +46,13 @@ if (preproc.restore() == 0) {
         webcrawler.add('scp-' + (i * 1000 - 1));
     }
 }
+
+console.log(os.argv[2]);
+if (os.argv[2] == 'restore') {
+    if (preproc.restore() == 0)
+        fresh();
+} else
+    fresh();
 
 os.on('SIGINT', function() {
     preproc.write();
