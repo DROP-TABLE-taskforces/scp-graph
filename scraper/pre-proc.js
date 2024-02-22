@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { Data } = require('./types');
 const webcrawler = require('./webcrawler');
+const { link, valid } = require('./parser');
 
 /**
  * @type {{
@@ -31,8 +32,9 @@ function restore_old_links() {
     db = JSON.parse(fs.readFileSync('../database.json', {encoding: 'utf-8'}));
     let count = 0;
     for (let page of db.pages)
+        webcrawler.remove(page.id);
         for (let link of page.links)
-            if (typeof link == 'string')
+            if (typeof link == 'string' && valid(link))
                 count += webcrawler.add(link) ? 1 : 0;
     return count;
 }

@@ -1,5 +1,6 @@
 const https = require('https');
 const { PError, Page } = require('./types');
+const { Socket } = require('dgram');
 const redirect = require('./pre-proc').redirect;
 
 /** @type {string[]} */
@@ -30,10 +31,12 @@ function add_to_queue(id, force) {
     return test;
 }
 
+/** @type {https.RequestOptions} */
 const options = {
     hostname: 'scp-wiki.wikidot.com',
     port: 443,
     path: '/',
+    timeout: 300000,
     headers: {
         'User-Agent': 'Mozilla/5.0'
     }
@@ -75,7 +78,7 @@ function np_aux(good, bad) {
     let data = '';
     options.path = '/' + id;
     let errorfound = false;
-    https.get(options, (res) => {
+    let req = https.get(options, (res) => {
         if (errorfound) return;
         if (res.statusCode < 200 || res.statusCode > 299) {
             if (res.statusCode < 303) {
@@ -98,9 +101,15 @@ function np_aux(good, bad) {
             let pagetags = tagmatch ? tagmatch[1] : '';
             good(new Page(id, pagecontent, pagetags));
         } else bad({place: 'crawler', reason: 'errfound', page: id})});
-    }).on('error', (err) => {
+    });
+    req.on('error', (err) => {
         errorfound = true;
         bad(new PError('crawler', 'connection', id, err));
+    });
+    req.on('timeout', () => {
+        errorfound = true;
+        add_to_queue(id, true);
+        req.destroy({timeout: 300000});
     });
 }
 
@@ -114,3 +123,4 @@ async function next_page() {
 
 module.exports.next = next_page;
 module.exports.add = add_to_queue;
+module.exports.remove = (id) => {foundpages[id] = true;};

@@ -316,7 +316,7 @@
     }
 
     let Graph = null;
-    let filters = null;
+    let filters = {};
     /**
      * The JSON database, pulled once and reprocessed to infinity.
      * @type {{
@@ -372,14 +372,14 @@
                 id: idx,
                 ref: site + page.id,
                 title: page.title,
-                value: Math.sqrt(page.links.length - 1),
+                value: 1,
                 type: TYPE,
                 tags: page.tags.map(idx => database.tags[idx]),
                 links: page.links
                     .filter((val, idx, arr) => arr.indexOf(val) === idx)
                     .map(ref => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
             };
-        });
+        }).filter(node => !filters[node.type]);
         /** @type {number[][]} */
         let links = database.pages.reduce((accu, elem, idx) => {
             /** @type {number[]} */
@@ -492,6 +492,11 @@
         database = db;
         proc_db();
     });
+
+    function updateFilters(type) {
+        filters[type] = filters[type] ? false : true;
+        proc_db();
+    }
 
     openNav();
 </script>

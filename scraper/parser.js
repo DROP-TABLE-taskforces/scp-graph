@@ -2,21 +2,28 @@ const { Page, Data } = require('./types');
 
 const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,
-    link: /href="(https?:\/\/scp-wiki\.wikidot\.com)?\/(.*?)"/g,
-    tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g
+    link: /href="(https?:\/\/scp-wiki\.wikidot\.com)?\/([^#]*?)"/g,
+    tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g,
+    invalid_link: /^local--files|^creditlink$|(component|^system):/
+}
+
+/** Is this string a crawlable link? */
+function is_link(str) {
+    return !(rexs.invalid_link.test(match[2]) || match[2] == '');
 }
 
 const known_types = [
-    'interview',
-    'experiment',
-    'resource',
+    'supplement',
     'author',
     'hub',
     'goi-format',
     'goi',
     'tale',
     'scp',
-    'admin'
+    'archived',
+    'admin',
+    'component',
+    'resource'
 ]
 
 /**
@@ -27,11 +34,9 @@ const known_types = [
 function get_data(page) {
     let title = page.text.match(rexs.title)[1];
     let links = [];
-    console.log('\ttitle ' + title);
     for (let match of page.text.matchAll(rexs.link))
-        if (!(/(component|system|archived):/.test(match[2]) || match[2] == ''))
-            links.push(match[2].split('#')[0]);
-    console.log('\tgot links');
+        if (is_link(match[2]))
+            links.push(match[2]);
     let tags = [];
     let type = /-hub$/.test(page.id) ? 'hub' : /^scp-/.test(page.id) ? 'scp' : 'unknown';
     for (let match of page.tags.matchAll(rexs.tag))
@@ -43,8 +48,9 @@ function get_data(page) {
                     break;
                 }
         }
-    console.log('\ttype ' + type);
+    console.log('\ttype ' + type + '; links ' + links);
     return new Data(page.id, title, links, tags, type);
 }
 
 module.exports.parse = get_data;
+module.exports.valid = is_link;

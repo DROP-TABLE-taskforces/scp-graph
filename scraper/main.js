@@ -11,13 +11,12 @@ function loop() {
         webcrawler.next().then((page) => {
             if (page && page.id) {
                 let data = parser.parse(page);
-                if (data.type == 'component') {
+                if (/component|admin|archived|resource/.test(data.type)) {
                     loop();
                     return;
                 }
                 for (let link of data.links)
-                    if (link != 'creditlink')
-                        webcrawler.add(link);
+                    webcrawler.add(link);
                 preproc.add(data);
                 count++;
                 if (count % 100 == 0) {
@@ -51,11 +50,12 @@ console.log(os.argv[2]);
 if (os.argv[2] == 'restore') {
     if (preproc.restore() == 0)
         fresh();
-} else
-    fresh();
+} else fresh();
 
 os.on('SIGINT', function() {
+    console.log('writing to database');
     preproc.write();
+    console.log('exiting');
     // listener disables standard effect, must be produced by hand
     os.exit();
 });
