@@ -382,7 +382,7 @@
         <div class="flex-row">
             <div class="cat action">
                 <label>
-                    <input id="scp-button" onclick="updateFilters('scp')" class="text" type="checkbox" value="0"><span>Show SCP-001s</span>
+                    <input id="scp_button" onclick="updateFilters('scp')" class="text" type="checkbox" checked="true"><span>Show SCP-001s</span>
                 </label>
             </div>
             <div class="cat action">
@@ -470,7 +470,7 @@
         resource:true,
         supplement:true,
         author:true,
-        scp:true,
+        scp:false,
         goi:true,
         scpSeries1:false,
         scpSeries2:false,
@@ -657,7 +657,7 @@
 
     /// LOADING DATABASE
 
-    fetch('database.json').then(res => res.json()).then((db) => {
+    fetch('../database.json').then(res => res.json()).then((db) => {
         database = db;
         proc_db();
     });
