@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .planet {
+            will-change: transform;
+            animation-name: orbit;
+            animation-duration:10s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+
+            /* change font-size to easily change how big the orbit
+              should be. 10px will make the radius 10px. */
+            font-size: 400px;
+        }
+        .planet1 {
+            will-change: transform;
+            animation-name: orbit;
+            animation-duration: 6s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+
+            /* change font-size to easily change how big the orbit
+              should be. 10px will make the radius 10px. */
+            font-size: 100px;
+        }
+
+        .planet2 {
+            will-change: transform;
+            animation-name: orbit;
+            animation-duration: 6s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+
+            /* change font-size to easily change how big the orbit
+              should be. 10px will make the radius 10px. */
+            font-size: 0px;
+        }
+
+        @keyframes orbit {
+            from {
+                transform: rotate(0turn)
+                translateX(1em)
+                rotate(0turn);
+            }
+            to {
+                transform: rotate(1turn)
+                translateX(1em)
+                rotate(-1turn);
+            }
+        }
+
+
+        /*
+          Just to style the demo
+        */
+        body {
+            margin: 0;
+        }
+
+        .universe {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #222;
+        }
+
+        .planet {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(
+                    to bottom,
+                    #721618 0%,
+                    #913F3F 100%
+            );
+            box-shadow: 2px 2px 16px -4px #000;
+        }
+        .planet:hover{
+            cursor: pointer;
+        }
+        .planet1:hover{
+            cursor: pointer;
+        }
+        .planet2:hover{
+            cursor: pointer;
+        }
+        .planet1 {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: dodgerblue;
+            box-shadow: 1px 1px 8px -2px #000;
+        }
+
+        .planet2 {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: yellow;
+            box-shadow: 1px 1px 8px -2px #000;
+        }
+
+        .path {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #bbb;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+        }
+        .path1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #bbb;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        .path2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px #bbb;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="universe">
+    <div class="path" style="margin-right: 300px;">
+        <div onclick="go3d()" class="planet"></div>
+    </div>
+    <div class="path1" style="margin-right: 100px;">
+        <div class="planet1"></div>
+    </div>
+    <div class="path2">
+        <div class="planet2"></div>
+    </div>
+    <script>
+        function go3d()
+        {
+            window.open("/2d/main.html");
+        }
+    </script>
+</div>
+</body>
+</html>
