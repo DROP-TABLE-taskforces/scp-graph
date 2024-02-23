@@ -375,7 +375,7 @@
             </div>
             <div class="cat action">
                 <label>
-                    <input id='other_button' onclick="updateFilters('unknown')" class="text" type="checkbox" value="0"><span>Show Other</span>
+                    <input id='supplement_button' onclick="updateFilters('supplement')" class="text" type="checkbox" value="0"><span>Show Others</span>
                 </label>
             </div>
         </div>
@@ -468,7 +468,7 @@
         hub: true,
         tale: true,
         resource:true,
-        unknown:true,
+        supplement:true,
         author:true,
         scp:true,
         goi:true,
@@ -503,9 +503,9 @@
         let TYPE=database.types[type];
         if(TYPE=="goi-format")
             TYPE="goi";
-        if(TYPE=="unknown")
-            TYPE="other";
-        if(title.substring(0,3)==="SCP" && TYPE!=="hub")
+        if(TYPE=="supplement" || TYPE=="unknown")
+            TYPE="supplement";
+        if(title.substring(0,3)==="SCP" && TYPE==="scp")
         {
             if(parseInt(title.slice(4))===1)
             {
@@ -524,11 +524,6 @@
                 else
                     TYPE = TYPE+ "Series" + '*' + (Math.floor(caca/10000)+1);
             }
-        }
-
-        if(title.substring(0,3)==="SPC")
-        {
-            TYPE = TYPE+ "Series" + 2;
         }
         return TYPE;
     }
@@ -640,7 +635,7 @@
             let obj = {
                 hub:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#C0C0C0"; ctx.fill();},
                 resource:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#C0C0C0"; ctx.fill();},
-                other:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#8B0000"; ctx.fill();},
+                supplement:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#8B0000"; ctx.fill();},
                 tale:() => {ctx.fillStyle = "purple";ctx.fillRect(x - 6, y - 6, 8, 8);},
                 author:() => {ctx.fillStyle = "pink";ctx.fillRect(x - 6, y - 6, 8, 8);},
                 scp:()=>{ctx.fillStyle = "black";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
