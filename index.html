@@ -209,15 +209,15 @@
         <div class="title">ABOUT US</div>
         <div class="flex-row" id="stil2">
             <div class="button">
-                <div class="text">textetxtext</div>
+                <div class="text">Here should be</div>
             </div>
             <div class="button">
-                <div class="text">textetxtext</div>
+                <div class="text">Some meta shit</div>
             </div>
         </div>
         <div class="flex-container" id="stil2">
             <div class="button">
-                <div class="text">textetxtext</div>
+                <div class="text">like not our real names</div>
             </div>
         </div>
     </div>
@@ -310,27 +310,115 @@
         </div>
     </div>
     <div>
-        <div class="title">Settings</div>
-        <div class="flex-row" id="stil2">
-            <div class="button">
-                <div class="text">Example</div>
-            </div>
-            <div class="button">
-                <div class="text">Example</div>
-            </div>
-        </div>
-        <div class="flex-container" id="stil2">
+        <div class="title">FILTER NODES</div>
+        <div class="flex-row">
             <div class="cat action">
                 <label>
-                    <input class="text" type="checkbox" value="0"><span>Action</span>
+                    <input onclick="check('scpSeries3',this);updateFilters('scpSeries3')" class="text" type="checkbox" value="1"><span>Show Series III</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries2',this);updateFilters('scpSeries2')" class="text" type="checkbox" value="1"><span>Show Series II</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries1',this);updateFilters('scpSeries1')" class="text" type="checkbox" value="1"><span>Show Series I</span>
+                </label>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries6',this);updateFilters('scpSeries6')" class="text" type="checkbox" value="1"><span>Show Series VI</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries5',this);updateFilters('scpSeries5')" class="text" type="checkbox" value="1"><span>Show Series V</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries4',this);updateFilters('scpSeries4')" class="text" type="checkbox" value="1"><span>Show Series IV</span>
+                </label>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries9',this);updateFilters('scpSeries9')" class="text" type="checkbox" value="1"><span>Show Series IX</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries8',this);updateFilters('scpSeries8')" class="text" type="checkbox" value="1"><span>Show Series VIII</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scpSeries7',this);updateFilters('scpSeries7')" class="text" type="checkbox" value="1"><span>Show Series VII</span>
+                </label>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="cat action">
+                <label>
+                    <input onclick="check('tale',this);updateFilters('tale')" class="text" type="checkbox" value="0"><span>Show Tales</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('hub',this);updateFilters('hub')" class="text" type="checkbox" value="0"><span>Show Hubs</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('unknown',this);updateFilters('unknown')" class="text" type="checkbox" value="0"><span>Show Other</span>
+                </label>
+            </div>
+        </div>
+        <div class="flex-row">
+            <div class="cat action">
+                <label>
+                    <input onclick="check('scp');updateFilters('scp')" class="text" type="checkbox" value="0"><span>Show SCP-001s</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('author');updateFilters('author')" class="text" type="checkbox" value="0"><span>Show Authors</span>
+                </label>
+            </div>
+            <div class="cat action">
+                <label>
+                    <input onclick="check('goi');updateFilters('goi')" class="text" type="checkbox" value="0"><span>Show GoI</span>
                 </label>
             </div>
         </div>
     </div>
-        <div class="title">Close Navbar</div>
+    <div>
+        <div class="title">Display Animations</div>
         <div class="flex-container" id="stil2">
             <div class="button">
-                <div class="closebtn" onclick="closeNav()" style="cursor:pointer;color: #C3C3C3;display: block;margin-left: 8px">Leave</div>
+                <div class="text"><a>example</a></div>
+            </div>
+        </div>
+        <div class="flex-container" id="stil2">
+            <div class="button">
+                <div class="text"><a>example</a></div>
+            </div>
+        </div>
+        <div class="flex-container" id="stil2">
+            <div class="button">
+                <div class="text"><a>example</a></div>
+            </div>
+        </div>
+    </div>
+        <div class="title">Close Navbar</div>
+    <div class="flex-col" style="font-weight: bold;">
+            <div class="button">
+                <div class="closebtn" onclick="closeNav()" style="cursor:pointer;color: #C3C3C3;display: block;margin-left: 8px">Close</div>
             </div>
         </div>
     </div>
@@ -342,6 +430,18 @@
     let thelink="";
 
     /// Sidenav STUFF
+
+    function check(type,elem)
+    {
+        if(type=="tale" && filters.tale==true)
+            filters.tale=false;
+        if(type=="tale" && filters.tale==false)
+            filters.tale=true;
+        if(elem.value==0)
+            elem.value=1;
+        else
+            elem.value=0;
+    }
 
     function GoLink(link)
     {
@@ -359,7 +459,7 @@
     });
 
     function openNav() {
-        document.getElementById("mySidenav").style.width = "15%";
+        document.getElementById("mySidenav").style.width = "300px";
     }
 
     function closeNav() {
@@ -370,6 +470,20 @@
     let filters = {
         hub: true,
         tale: true,
+        resource:true,
+        unknown:true,
+        author:true,
+        scp:true,
+        goi:true,
+        scpSeries1:false,
+        scpSeries2:false,
+        scpSeries3:false,
+        scpSeries4:false,
+        scpSeries5:false,
+        scpSeries6:false,
+        scpSeries7:false,
+        scpSeries8:false,
+        scpSeries9:false,
     };
     /**
      * The JSON database, pulled once and reprocessed to infinity.
@@ -390,6 +504,8 @@
 
     function retype(type, title) {
         let TYPE=database.types[type];
+        if(TYPE=="goi-format")
+            TYPE="goi";
         if(TYPE=="unknown")
             TYPE="other";
         if(title.substring(0,3)==="SCP" && TYPE!=="hub")
@@ -540,7 +656,7 @@
                 scpSeries7:()=>{ctx.fillStyle = "#1F78B4";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
                 scpSeries8:()=>{ctx.fillStyle = "#B15928";  ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
                 scpSeries9:()=>{ctx.fillStyle = "#63bda4";  ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
-                'goi-format':()=>{ctx.beginPath(); ctx.moveTo(x - 7, y - 4); ctx.lineTo(x, y - 8); ctx.lineTo(x + 7, y - 4);
+                'goi':()=>{ctx.beginPath(); ctx.moveTo(x - 7, y - 4); ctx.lineTo(x, y - 8); ctx.lineTo(x + 7, y - 4);
                         ctx.lineTo(x + 7, y + 4); ctx.lineTo(x, y + 8); ctx.lineTo(x - 7, y + 4); ctx.fillStyle = '#282343'; ctx.fill();}
             }
             obj[type] && obj[type]();
