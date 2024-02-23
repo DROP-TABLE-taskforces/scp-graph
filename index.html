@@ -7,7 +7,7 @@
         .planet {
             will-change: transform;
             animation-name: orbit;
-            animation-duration:10s;
+            animation-duration:20s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
 
@@ -18,19 +18,19 @@
         .planet1 {
             will-change: transform;
             animation-name: orbit;
-            animation-duration: 6s;
+            animation-duration: 14s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
 
             /* change font-size to easily change how big the orbit
               should be. 10px will make the radius 10px. */
-            font-size: 100px;
+            font-size: 200px;
         }
 
         .planet2 {
             will-change: transform;
             animation-name: orbit;
-            animation-duration: 6s;
+            animation-duration: 10s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
 
@@ -74,8 +74,8 @@
             border-radius: 50%;
             background: linear-gradient(
                     to bottom,
-                    #721618 0%,
-                    #913F3F 100%
+                    #771315 0%,
+                    #9a4848 100%
             );
             box-shadow: 2px 2px 16px -4px #000;
         }
@@ -97,10 +97,10 @@
         }
 
         .planet2 {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            background: yellow;
+            background: #E8E800;
             box-shadow: 1px 1px 8px -2px #000;
         }
 
@@ -112,42 +112,75 @@
             width: 800px;
             height: 800px;
             border-radius: 50%;
+            z-index: 0;
         }
         .path1{
             display: flex;
             justify-content: center;
             align-items: center;
             border: 2px solid #bbb;
-            width: 200px;
-            height: 200px;
+            width: 400px;
+            height: 400px;
             border-radius: 50%;
+            z-index: 0;
         }
         .path2{
             display: flex;
             justify-content: center;
             align-items: center;
             border: 2px #bbb;
-            width: 300px;
-            height: 300px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
+            z-index: 0;
         }
+
+        .bgtext {
+            position: absolute;
+        }
+
+        .bgtext:after {
+            margin: 3rem;
+            content: "Background text";
+            position: absolute;
+            transform: rotate(300deg);
+            -webkit-transform: rotate(300deg);
+            color: rgb(187, 182, 182);
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
     </style>
 </head>
 <body>
+
 <div class="universe">
-    <div class="path" style="margin-right: 300px;">
-        <div onclick="go3d()" class="planet"></div>
+    <div class="bgtext">
+        <p style="font-size: 170px;color: #141414;z-index: -2; text-align: ">SCP DATABASE</p>
+        <p style="font-size: 170px;color: #141414;z-index: -2;">CHOOSE GRAPH</p>
+    </div>
+    <div class="path" style="margin-right: 200px;">
+        <div onclick="go3d()" class="planet"><a style="font-size: 30px;position: absolute;color: white;top: 30px;right: 30px;">3D</a></div>
     </div>
     <div class="path1" style="margin-right: 100px;">
-        <div class="planet1"></div>
+        <div onclick="go2d()" class="planet1"><a style="font-size: 30px;position: absolute;color: white;top: 30px;right: 30px;">2D</a></div>
     </div>
     <div class="path2">
-        <div class="planet2"></div>
+        <div onclick="gostatic()" class="planet2"><a style="font-size: 30px;position: absolute;color: white;top: 60px;right: 35px;">Static</a></div>
     </div>
     <script>
         function go3d()
         {
-            window.open("/2d/main.html");
+            window.open("scp-graph/3d/index.html");
+        }
+        function go2d()
+        {
+            window.open("scp-graph/2d/index.html");
+        }
+        function gostatic()
+        {
+            window.open("scp-graph/static/index.html");
         }
     </script>
 </div>
