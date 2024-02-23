@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style> body { margin: 0; } </style>
+    <title>scp-graph</title>
+    <script src="//unpkg.com/3d-force-graph"></script>
+    <script type="module" src="//unpkg.com/three/build/three.module.js"></script>
+    <!--<script src="../../dist/force-graph.js"></script>-->
+    <style>
+        body{
+            font-family: Arial;
+        }
+
+        .sidenav {
+            scrollbar-color: #495AD3 #2C2C2D;
+            scrollbar-width: thin;
+            direction: rtl;
+            height: 100%;
+            position: fixed;
+            z-index: 1;
+            background-color: black;
+            overflow-x: hidden;
+            transition: 0.2s;
+        }
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flex-col > div {
+            width: 100%;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flex-row > div {
+            flex: 1 1 0;
+            width: 0;
+        }
+
+        /*style of divs*/
+
+        #stil1{
+            font-size: 11px;
+            background-color: #121212;
+            text-align: center;
+            color: #9F9F9F;
+        }
+
+        #stil2{
+            font-size: 11px;
+            background-color: black;
+            text-align: left;
+            color: #C3C3C3;
+        }
+        #stil2:hover {
+            background: #495AD3;
+        }
+
+        .title{
+            font-weight: bold;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+        /*Button animation*/
+
+
+        .button {
+            cursor:pointer;
+            font-size: 12px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            width: 100%;
+            display: block;
+            background: linear-gradient(to right, #495AD3 50%,black 50%);
+            background-size: 201% 100%;
+            background-position: right bottom;
+            transition: all .2s ease-out;
+        }
+
+        .legend {
+            font-size: 12px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            width: 100%;
+            display: block;
+            background: black;
+            background-size: 201% 100%;
+            transition: all .2s ease-out;
+        }
+
+        .button:hover {
+            background-position: left bottom;
+        }
+
+        .text {
+            margin-left:8px;
+            color: #C3C3C3;
+            display: block;
+        }
+
+        /*CHECKBOX CSS*/
+
+        .cat{
+            cursor:pointer;
+            font-size: 12px;
+            width: 100%;
+            display: block;
+            background: linear-gradient(to right, #495AD3 50%,black 50%);
+            background-size: 201% 100%;
+            background-position: right bottom;
+            transition: all .2s ease-out;
+        }
+
+        .cat:hover {
+            background-position: left bottom;
+        }
+
+        .cat label span {
+            cursor:pointer;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            text-align: center;
+            display: block;
+        }
+
+        .cat label input {
+            position: absolute;
+            display: none;
+            color: #fff !important;
+        }
+        /* selects all of the text within the input element and changes the color of the text */
+        .cat label input + span{color: #fff;}
+
+
+        /* This will declare how a selected input will look giving generic properties */
+        .cat input:checked + span {
+            color: #ffffff;
+            text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+        }
+
+
+        /*
+        This following statements selects each category individually that contains an input element that is a checkbox and is checked (or selected) and chabges the background color of the span element.
+        */
+
+        .action input:checked + span{background-color: #495AD3;}
+
+    </style>
+</head>
+<body>
+
+<span style="font-size: 4vmin;cursor:pointer;position: absolute;left: 10px;right: 0;" onclick="openNav()">&#9776;</span>
+
+<div id="mySidenav" class="sidenav">
+    <div class="flex-col" id="stil1">
+        <div class="side-block media" style="padding: 10px 0; background: black;">
+            <div style="text-align: center;text-decoration: none;">
+                <a style="text-decoration: none;" href="https://discord.com/invite/scp">
+                    <img src="https://scp-wiki.wikidot.com/local--files/nav:side/icon-Discord-2023.png" alt="Discord" class="image">
+                </a>
+                <a style="text-decoration: none;" href="https://www.tiktok.com/@scpwikiofficial?">
+                    <img src="https://scp-wiki.wdfiles.com/local--files/nav%3Aside/social-tiktok.png" alt="TikTok" class="image">
+                </a>
+                <a style="text-decoration: none;" href="https://www.twitch.tv/scpwiki">
+                    <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-twitch.png" alt="Twitch" class="image">
+                </a>
+                <a style="text-decoration: none;" href="https://www.instagram.com/scpfoundationwiki">
+                    <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-instagram.png" alt="Instagram" class="image">
+                </a>
+                <a style="text-decoration: none;" href="https://www.reddit.com/r/SCP">
+                    <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-reddit.png" alt="Reddit" class="image">
+                </a>
+                <a style="text-decoration: none;" href="https://twitter.com/scpwiki">
+                    <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-twitter.png" alt="Twitter" class="image">
+                </a>
+                <a style="text-decoration: none;" href="https://www.facebook.com/scpfoundation">
+                    <img src="https://scp-wiki.wdfiles.com/local--files/nav:side/social-facebook.png" alt="Facebook" class="image">
+                </a>
+            </div>
+        </div>
+        <div>
+            <div class="title">OFFICIAL WEBSITE URLS</div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a href="https://scp-wiki.wikidot.com/guide-for-newcomers" style="text-decoration: none;color: #C3C3C3">Guide for Newcomers</a></div>
+                </div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a href="https://scp-wiki.wikidot.com/system:join" style="text-decoration: none;color: #C3C3C3">Join the Site</a></div>
+                </div>
+            </div>
+            <div class="flex-row" style="font-weight: bold;">
+                <div class="button">
+                    <div class="text"><a href="https://scp-wiki.wikidot.com/forum:start" style="text-decoration: none;color: #C3C3C3">Forum</a></div>
+                </div>
+                <div class="button">
+                    <div class="text"><a href="https://scp-wiki.wikidot.com/" style="text-decoration: none;color: #C3C3C3">Main</a></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="title">ABOUT US</div>
+            <div class="flex-row" id="stil2">
+                <div class="button">
+                    <div class="text">Here should be</div>
+                </div>
+                <div class="button">
+                    <div class="text">Some meta shit</div>
+                </div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text">like not our real names</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="title">NODE INFORMATION</div>
+            <div class="flex-container" id="stil2">
+                <div onclick="GoLink(thelink)" id="pagelink" class="button">
+                    <div class="text"><a id="headlink" style="text-decoration: none;color: #C3C3C3">[CLICK ON A NODE]</a></div>
+                </div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a id="connections" href="" style="text-decoration: none;color: #C3C3C3">[TO SELECT IT]</a></div>
+                </div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a id="type" href="" style="text-decoration: none;color: #C3C3C3">[AND DISPLAY INFORMATION]</a></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="title">TAGS OF NODE</div>
+            <div id="parenttag"></div>
+            <div id="del" class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a id="type" href="" style="text-decoration: none;color: #C3C3C3">[DATA REDACTED]</a></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="title">LEGEND</div>
+            <!--filter readme-->
+            <!--use onclick="updateFilters(<category-name>)" for filtering an item-->
+            <!--set defaults in filters with the property name being the category name and the value true (false is default)-->
+            <div class="flex-row">
+                <div class="legend">
+                    <div class="text">Series III &#9657; <a style="color:#E31A1C;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Series II &#9657; <a style="color:#33A02C;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Series I &#9657; <a style="color:#A6CEE3;">⬤</a></div>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="legend">
+                    <div class="text">Series VI &#9657; <a style="color:#B2DF8A;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Series V &#9657; <a style="color:#FFFF99;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Series IV &#9657; <a style="color:#FDBF6F;">⬤</a></div>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="legend">
+                    <div class="text">Series IX &#9657; <a style="color:#63bda4;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Series VIII &#9657; <a style="color:#B15928;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Series VII &#9657; <a style="color:#1F78B4;">⬤</a></div>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="legend">
+                    <div class="text">Tale &#9657; <a style="color:purple;">■</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Hub &#9657; <a style="color:#C0C0C0;">▲</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Other &#9657; <a style="color:#8B0000;">▲</a></div>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="legend">
+                    <div class="text">SCP-001 &#9657; <a style="color:#141414;">⬤</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">Author &#9657; <a style="color:pink;">■</a></div>
+                </div>
+                <div class="legend">
+                    <div class="text">GoI &#9657; <a style="color:#282343;">⬢</a></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="title">FILTER NODES</div>
+            <div class="flex-row">
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries3_button" onclick="updateFilters('scpSeries3')" class="text" type="checkbox" checked="true"><span>Show Series III</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries2_button" onclick="updateFilters('scpSeries2')" class="text" type="checkbox" checked="true"><span>Show Series II</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries1_button" onclick="updateFilters('scpSeries1')" class="text" type="checkbox" checked="true"><span>Show Series I</span>
+                    </label>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries6_button" onclick="updateFilters('scpSeries6')" class="text" type="checkbox" checked="true"><span>Show Series VI</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries5_button" onclick="updateFilters('scpSeries5')" class="text" type="checkbox" checked="true"><span>Show Series V</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries4_button" onclick="updateFilters('scpSeries4')" class="text" type="checkbox" checked="true"><span>Show Series IV</span>
+                    </label>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries9_button" onclick="updateFilters('scpSeries9')" class="text" type="checkbox" checked="true"><span>Show Series IX</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries8_button" onclick="updateFilters('scpSeries8')" class="text" type="checkbox" checked="true"><span>Show Series VIII</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="scpSeries7_button" onclick="updateFilters('scpSeries7')" class="text" type="checkbox" checked="true"><span>Show Series VII</span>
+                    </label>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="cat action">
+                    <label>
+                        <input id="tale_button" onclick="updateFilters('tale')" class="text" type="checkbox" value="0"><span>Show Tales</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="hub_button" onclick="updateFilters('hub')" class="text" type="checkbox" value="0"><span>Show Hubs</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id='supplement_button' onclick="updateFilters('supplement')" class="text" type="checkbox" value="0"><span>Show Others</span>
+                    </label>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="cat action">
+                    <label>
+                        <input id="scp_button" onclick="updateFilters('scp')" class="text" type="checkbox" checked="true"><span>Show SCP-001s</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="author_button" onclick="updateFilters('author')" class="text" type="checkbox" value="0"><span>Show Authors</span>
+                    </label>
+                </div>
+                <div class="cat action">
+                    <label>
+                        <input id="goi_button" onclick="updateFilters('goi')" class="text" type="checkbox" value="0"><span>Show GoI</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="title">Display Animations</div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a>example</a></div>
+                </div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a>example</a></div>
+                </div>
+            </div>
+            <div class="flex-container" id="stil2">
+                <div class="button">
+                    <div class="text"><a>example</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="title">Close Navbar</div>
+        <div class="flex-col" style="font-weight: bold;">
+            <div class="button">
+                <div class="closebtn" onclick="closeNav()" style="cursor:pointer;color: #C3C3C3;display: block;margin-left: 8px">Close</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="graph" ></div>
+
+<script type="module">
+    import * as THREE from '//unpkg.com/three/build/three.module.js';
+
+    // Random tree
+    const N = 100;
+    const gData = {
+        nodes: [...Array(N).keys()].map(i => ({ id: i })),
+        links: [...Array(N).keys()]
+            .filter(id => id)
+            .map(id => ({
+                source: id,
+                target: Math.round(Math.random() * (id-1))
+            }))
+    };
+
+
+</script>
+
+<script>
+
+    let thelink="";
+
+    /// Sidenav STUFF
+
+    function check(type,elem)
+    {
+
+        if(elem.value==0)
+            elem.value=1;
+        else
+            elem.value=0;
+    }
+
+    function GoLink(link)
+    {
+        window.open(link);
+    }
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "300px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
+    let Graph = null;
+    let filters = {
+        hub: true,
+        tale: true,
+        resource:true,
+        supplement:true,
+        author:true,
+        scp:false,
+        goi:true,
+        scpSeries1:false,
+        scpSeries2:false,
+        scpSeries3:false,
+        scpSeries4:false,
+        scpSeries5:false,
+        scpSeries6:false,
+        scpSeries7:false,
+        scpSeries8:false,
+        scpSeries9:false,
+    };
+    /**
+     * The JSON database, pulled once and reprocessed to infinity.
+     * @type {{
+     *  pages: {
+     *      id: string,
+     *      title: string,
+     *      type: number,
+     *      links: (string | number)[],
+     *      tags: number[],
+     *  }[],
+     *  tags: string[],
+     *  types: string[]
+     * }}
+     */
+    let database = null;
+    let graph_json = {};
+
+    function retype(type, title) {
+        let TYPE=database.types[type];
+        if(TYPE=="goi-format")
+            TYPE="goi";
+        if(TYPE=="supplement" || TYPE=="unknown")
+            TYPE="supplement";
+        if(title.substring(0,3)==="SCP" && TYPE==="scp")
+        {
+            if(parseInt(title.slice(4))===1)
+            {
+                TYPE="hub";
+            }
+            else
+                /*if(page.title[page.title.length-1]==='X' && page.title[page.title.length-2]==='E')
+                {
+                    TYPE="Explained";
+                }
+                else*/
+            {
+                let caca = parseInt(title.slice(4));
+                if(caca<10000)
+                    TYPE = TYPE+ "Series" + (Math.floor(caca/1000)+1);
+                else
+                    TYPE = TYPE+ "Series" + '*' + (Math.floor(caca/10000)+1);
+            }
+        }
+        return TYPE;
+    }
+
+    function proc_db() {
+        const site = 'https://scp-wiki.wikidot.com/'
+        const include = database.pages.map(page => !filters[retype(page.type, page.title)]);
+        graph_json.nodes = database.pages.map((page, idx) => {
+            return {
+                id: idx,
+                ref: site + page.id,
+                title: page.title,
+                value: 1,
+                type: retype(page.type, page.title),
+                tags: page.tags.map(idx => database.tags[idx]),
+                links: page.links
+                    .filter((val, idx, arr) => arr.indexOf(val) === idx)
+                    .map(ref => site + (typeof ref == 'number' ? database.pages[ref].id : ref))
+            };
+        }).filter((page) => include[page.id]);
+        /** @type {number[][]} */
+        let links = database.pages.reduce((accu, elem, idx) => {
+            if (!include[idx]) return accu;
+            /** @type {number[]} */
+            let inrefs = elem.links.filter(l => typeof l == 'number' && include[l]);
+            accu[idx] = inrefs.filter(l => !accu[l])
+                .reduce((obj, l) => {
+                    obj[l] = (obj[l] || 0) + 1;
+                    return obj;
+                }, Array(0));
+            for (let l of inrefs.filter(l => accu[l]))
+                accu[l][idx] = (accu[l][idx] || 0) + 1;
+            return accu;
+        }, Array(0));
+        graph_json.links = [];
+        links.forEach((ds, s) => ds.forEach((v, d) => graph_json.links.push({src: s, dst: d, val: links[s][d]})));
+        console.log('' + graph_json.nodes.length + ' nodes, ' + graph_json.links.length + 'edges');
+        Graph = ForceGraph3D()(document.getElementById('graph'))
+            .graphData(graph_json)
+            .nodeId('id')
+            .nodeVal('value')
+            .nodeLabel('title')
+            .linkSource('src')
+            .linkTarget('dst')
+            .nodeThreeObject(({ id }) => new THREE.Mesh(
+                [
+                    new THREE.BoxGeometry(Math.random() * 20, Math.random() * 20, Math.random() * 20),
+                    new THREE.ConeGeometry(Math.random() * 10, Math.random() * 20),
+                    new THREE.CylinderGeometry(Math.random() * 10, Math.random() * 10, Math.random() * 20),
+                    new THREE.DodecahedronGeometry(Math.random() * 10),
+                    new THREE.SphereGeometry(Math.random() * 10),
+                    new THREE.TorusGeometry(Math.random() * 10, Math.random() * 2),
+                    new THREE.TorusKnotGeometry(Math.random() * 10, Math.random() * 2)
+                ][id%7],
+                new THREE.MeshLambertMaterial({
+                    color: Math.round(Math.random() * Math.pow(2, 24)),
+                    transparent: true,
+                    opacity: 0.75
+                })
+            ))
+
+            /// NODE INFORMATION FUNCTIONS
+
+            .onNodeClick(node => {
+                // Center/zoom on node
+                //Graph.centerAt(node.x, node.y, 1000);
+                //Graph.zoom(6, 1000);
+                openNav();
+                /// ADD THE TTILE
+
+                let titletag = document.getElementById("headlink");
+                titletag.innerHTML="Access fileserv &#9657;"+node.title;
+                thelink=node.ref;
+
+                /// ADD THE CONNECTION NUMBER
+
+                let connectiontag = document.getElementById("connections");
+                connectiontag.innerHTML = "Number of Edges &#9657;"+node.links.length;
+
+                /// ADD THE TYPE
+
+                let typetag = document.getElementById("type");
+                typetag.innerHTML = "Type of Node &#9657;"+node.type.toUpperCase();
+
+                /// CREATE THE TAGS IN MULTIPLE NEAT ROWS
+
+                let tagpar=document.getElementById("parenttag");
+                tagpar.className="title";
+                while (tagpar.lastElementChild) {
+                    tagpar.removeChild(tagpar.lastElementChild);
+                }
+                if(node.tags.length!==0)
+                    document.getElementById("del").style.display = 'none';
+                else
+                    document.getElementById("del").style.display = 'visible';
+                const numberoftags=3;
+                for(let i=0;i<node.tags.length/numberoftags;i++)
+                {
+                    let newDiv = document.createElement("div");
+                    newDiv.className="flex-row";
+                    tagpar.appendChild(newDiv);
+                    let max;
+                    if(i*numberoftags+numberoftags>node.tags.length)
+                        max=node.tags.length;
+                    else
+                        max=i*numberoftags+numberoftags;
+                    for(let j=i*numberoftags;j<max;j++)
+                    {
+                        let newbutton = document.createElement("div");
+                        newbutton.className="button";
+                        if(node.tags[j]==="extradimensional")
+                            node.tags[j]="extra-dimensional"
+                        newbutton.innerHTML=`<div className="text">`+node.tags[j].charAt(0).toUpperCase() + node.tags[j].slice(1)+`</div>`;
+                        newbutton.setAttribute( "onClick", "GoLink"+`("`+"https://scp-wiki.wikidot.com/system:page-tags/tag/"+node.tags[j]+"#pages"+`")`);
+                        newDiv.appendChild(newbutton);
+                    }
+                    console.log(node.links);
+                }
+            });
+        function nodeCreate({ id, x, y },ctx) {
+
+            let type = graph_json.nodes.find(n => n.id === id).type;
+            /**@type {Object.<string, ()=>void>}*/
+            let obj = {
+                hub:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#C0C0C0"; ctx.fill();},
+                resource:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#C0C0C0"; ctx.fill();},
+                supplement:() => {ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 6, y + 6); ctx.lineTo(x + 6, y + 6);ctx.fillStyle = "#8B0000"; ctx.fill();},
+                tale:() => {ctx.fillStyle = "purple";ctx.fillRect(x - 6, y - 6, 8, 8);},
+                author:() => {ctx.fillStyle = "pink";ctx.fillRect(x - 6, y - 6, 8, 8);},
+                scp:()=>{ctx.fillStyle = "black";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries1:()=>{ctx.fillStyle = "#A6CEE3";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries2:()=>{ctx.fillStyle = "#33A02C";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries3:()=>{ctx.fillStyle = "#E31A1C";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries4:()=>{ctx.fillStyle = "#FDBF6F";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries5:()=>{ctx.fillStyle = "#FFFF99";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries6:()=>{ctx.fillStyle = "#B2DF8A";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries7:()=>{ctx.fillStyle = "#1F78B4";ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries8:()=>{ctx.fillStyle = "#B15928";  ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                scpSeries9:()=>{ctx.fillStyle = "#63bda4";  ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI, false); ctx.fill();},
+                'goi':()=>{ctx.beginPath(); ctx.moveTo(x - 7, y - 4); ctx.lineTo(x, y - 8); ctx.lineTo(x + 7, y - 4);
+                    ctx.lineTo(x + 7, y + 4); ctx.lineTo(x, y + 8); ctx.lineTo(x - 7, y + 4); ctx.fillStyle = '#282343'; ctx.fill();}
+            }
+            obj[type] && obj[type]();
+        }
+    }
+
+    /// LOADING DATABASE
+
+    fetch('../database.json').then(res => res.json()).then((db) => {
+        database = db;
+        proc_db();
+    });
+
+    function updateFilters(type) {
+        filters[type] = filters[type] ? false : true;
+        elem = document.getElementById(type + '_button');
+        elem.value = 1 - (elem.value || 0);
+        proc_db();
+    }
+
+    openNav();
+</script>
+</body>
+</html>
