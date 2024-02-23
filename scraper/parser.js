@@ -4,7 +4,7 @@ const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,
     link: /href="(https?:\/\/scp-wiki\.wikidot\.com)?\/([^#]*?)"/g,
     tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g,
-    invalid_link: /^local--files|^creditlink$|^forum\/(component|^system):/
+    invalid_link: /^local--files|^creditlink$|^forum\/|^(component|system|theme|art):/
 }
 
 /** Is this string a crawlable link? */
@@ -13,17 +13,24 @@ function is_link(str) {
 }
 
 const known_types = [
-    'supplement',
-    'author',
-    'hub',
-    'goi-format',
-    'goi',
-    'tale',
-    'scp',
-    'archived',
-    'admin',
+    'news',
+    'essay',
+    'artist',
+    'artwork',
+    'guide',
+    'resource',
     'component',
-    'resource'
+    'admin',
+    'archived',
+    'site',
+    'fragment',
+    'scp',
+    'tale',
+    'goi',
+    'goi-format',
+    'hub',
+    'author',
+    'supplement',
 ]
 
 /**

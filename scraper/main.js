@@ -11,7 +11,7 @@ function loop() {
         webcrawler.next().then((page) => {
             if (page && page.id) {
                 let data = parser.parse(page);
-                if (/component|admin|archived|resource/.test(data.type)) {
+                if (/component|admin|archived|resource|guide|theme|artist|artwork|essay|news/.test(data.type)) {
                     loop();
                     return;
                 }
