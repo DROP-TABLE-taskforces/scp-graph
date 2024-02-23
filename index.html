@@ -104,8 +104,52 @@
             display: block;
         }
 
-        /*BAR*/
+        /*CHECKBOX CSS*/
 
+        .cat{
+            cursor:pointer;
+            font-size: 12px;
+            width: 100%;
+            display: block;
+            background: linear-gradient(to right, #495AD3 50%,black 50%);
+            background-size: 201% 100%;
+            background-position: right bottom;
+            transition: all .2s ease-out;
+        }
+
+        .cat:hover {
+            background-position: left bottom;
+        }
+
+        .cat label span {
+            cursor:pointer;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            text-align: center;
+            display: block;
+        }
+
+        .cat label input {
+            position: absolute;
+            display: none;
+            color: #fff !important;
+        }
+        /* selects all of the text within the input element and changes the color of the text */
+        .cat label input + span{color: #fff;}
+
+
+        /* This will declare how a selected input will look giving generic properties */
+        .cat input:checked + span {
+            color: #ffffff;
+            text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+        }
+
+
+        /*
+        This following statements selects each category individually that contains an input element that is a checkbox and is checked (or selected) and chabges the background color of the span element.
+        */
+
+        .action input:checked + span{background-color: #495AD3;}
 
     </style>
 </head>
@@ -276,8 +320,10 @@
             </div>
         </div>
         <div class="flex-container" id="stil2">
-            <div class="button">
-                <div class="text">Example</div>
+            <div class="cat action">
+                <label>
+                    <input class="text" type="checkbox" value="0"><span>Action</span>
+                </label>
             </div>
         </div>
     </div>
