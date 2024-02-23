@@ -4,12 +4,12 @@ const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,
     link: /href="(https?:\/\/scp-wiki\.wikidot\.com)?\/([^#]*?)"/g,
     tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g,
-    invalid_link: /^local--files|^creditlink$|(component|^system):/
+    invalid_link: /^local--files|^creditlink$|^forum\/(component|^system):/
 }
 
 /** Is this string a crawlable link? */
 function is_link(str) {
-    return !(rexs.invalid_link.test(match[2]) || match[2] == '');
+    return !(rexs.invalid_link.test(str) || str == '');
 }
 
 const known_types = [
