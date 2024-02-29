@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { Data } = require('./types');
 const webcrawler = require('./webcrawler');
-const { link, valid } = require('./parser');
+const { valid } = require('./parser');
 
 /**
  * @type {{
@@ -29,13 +29,18 @@ let db_raw_size = 0;
  * @returns {number} Number of links that remain unexplored.
  */
 function restore_old_links() {
-    db = JSON.parse(fs.readFileSync('../database.json', {encoding: 'utf-8'}));
+    rawstr = fs.readFileSync('../database.json', {encoding: 'utf-8'});
+    db = JSON.parse(rawstr);
+    db_raw_size = rawstr.length;
+    console.log('' + db.pages.length + ' recovered');
     let count = 0;
-    for (let page of db.pages)
+    for (let page of db.pages) {
         webcrawler.remove(page.id);
         for (let link of page.links)
             if (typeof link == 'string' && valid(link))
                 count += webcrawler.add(link) ? 1 : 0;
+    }
+    console.log('' + count + ' uncrawled pages');
     return count;
 }
 

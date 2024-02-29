@@ -84,7 +84,6 @@ function np_aux(good, bad) {
             if (res.statusCode < 303) {
                 queue.unshift(res.headers.location.match(/(https?:\/\/([a-z_A-Z0-9-]*.)*[a-z_A-Z0-9-])?\/(.*)/)[3]);
                 redirect(id, queue[0]);
-                foundpages[queue[0]] = false;
                 np_aux(good, bad);
                 return;
             }
@@ -96,11 +95,15 @@ function np_aux(good, bad) {
             .on('close', () => { if (!errorfound) {
             console.log('\tgot page');
             let pgctstmatch = data.match(contex[0]);
+            if (!pgctstmatch) {
+                bad(new PError('crawler', 'no-content', id, {content: '#' + data + '#'}));
+                return;
+            }
             let pagecontent = data.substring(pgctstmatch.index + pgctstmatch[0].length, data.match(contex[1]).index);
             let tagmatch = data.match(tagex);
             let pagetags = tagmatch ? tagmatch[1] : '';
             good(new Page(id, pagecontent, pagetags));
-        } else bad({place: 'crawler', reason: 'errfound', page: id})});
+        } else bad(new PError('crawler', 'errfound', id))});
     });
     req.on('error', (err) => {
         errorfound = true;

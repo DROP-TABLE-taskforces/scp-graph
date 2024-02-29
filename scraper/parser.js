@@ -4,7 +4,7 @@ const rexs = {
     title: /<div id="page-title">[ \n\t]*(.*?)[ \n\t]*<\/div>/,
     link: /href="(https?:\/\/scp-wiki\.wikidot\.com)?\/([^#]*?)"/g,
     tag: /<a href="\/system:page-tags\/tag\/([^_]*?)#pages">([^_]*?)<\/a>/g,
-    invalid_link: /^local--files|^creditlink$|^forum\/|^(component|system|theme|art):/
+    invalid_link: /^local--files|\.xml$|^creditlink$|^forum\/|^(component|system|theme|art):/
 }
 
 /** Is this string a crawlable link? */
