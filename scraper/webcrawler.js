@@ -99,7 +99,12 @@ function np_aux(good, bad) {
                 bad(new PError('crawler', 'no-content', id, {content: '#' + data + '#'}));
                 return;
             }
-            let pagecontent = data.substring(pgctstmatch.index + pgctstmatch[0].length, data.match(contex[1]).index);
+            let pgctfnmatch = data.match(contex[1]);
+            if (!pgctfnmatch) {
+                bad(new PError('crawler', 'no-content', id, {content: '#' + data + '#'}));
+                return;
+            }
+            let pagecontent = data.substring(pgctstmatch.index + pgctstmatch[0].length, pgctfnmatch.index);
             let tagmatch = data.match(tagex);
             let pagetags = tagmatch ? tagmatch[1] : '';
             good(new Page(id, pagecontent, pagetags));

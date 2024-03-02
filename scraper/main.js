@@ -12,6 +12,7 @@ function loop() {
             if (page && page.id) {
                 let data = parser.parse(page);
                 if (/component|admin|archived|resource|guide|theme|artist|artwork|essay|news/.test(data.type)) {
+                    preproc.redirect(data.id);
                     loop();
                     return;
                 }
@@ -30,6 +31,8 @@ function loop() {
         }).catch((/** @type {T.PError} */ err) => {
             if (err.reason == 'code' && err.code > 499)
                 webcrawler.add(err.page, true);
+            if (err.reason == 'code' && err.code == 404)
+                preproc.redirect(err.page);
             setTimeout(loop, 120000);
             preproc.write();
             console.log(err.str());

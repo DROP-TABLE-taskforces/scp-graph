@@ -47,11 +47,27 @@ function restore_old_links() {
 /**
  * Change a string identifier that returns a 301 into the header provided location.
  * @param {string} oldlink Old page reference.
- * @param {number | string} newlink New page reference, or internal database ID.
+ * @param {number | string | undefined} newlink New page reference, or internal database ID.
+ * Leave undefined for page *removal*.
  * @returns {void} Nothing.
  */
 function change_link(oldlink, newlink) {
     console.log('\tredirecting ' + oldlink + ' to ' + newlink);
+    if (newlink == undefined) {
+        let idx = db.pages.findIndex(p => p.id == oldlink);
+        if (idx >= 0) {
+            db_raw_size -= JSON.stringify(db.pages[idx]).length;
+            db.pages.splice(idx, 1);
+        }
+        for (let page of db.pages)
+            for (let i = 0; i < page.links.length; i++)
+                if (page.links[i] === oldlink) {
+                    db_raw_size -= oldlink - 2;
+                    page.links.splice(i, 1);
+                    i--;
+                }
+        return;
+    }
     const delta = (typeof newlink == 'number' ? 7 : newlink.length) - oldlink.length;
     for (let page of db.pages) {
         if (page.id === oldlink) {
